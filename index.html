@@ -4,93 +4,633 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QuerySmart AI LLC - Innovative Technical Solutions</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    /* Custom CSS for header background and overlay */
-    .header-bg {
-      background: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #1a202c;
+      background: #f7fafc;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #2d3748;
+      font-weight: 500;
+      transition: all 0.3s ease;
       position: relative;
     }
-    .header-bg::before {
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: #667eea;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #2d3748;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
     }
-    .header-content {
+
+    .hero-content {
+      max-width: 800px;
+      padding: 0 2rem;
       position: relative;
       z-index: 1;
     }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(45deg, #ffffff, #f0f0f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .hero p {
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .cta-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Floating particles */
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 15s infinite ease-in-out;
+    }
+
+    .particle:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .particle:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      top: 60%;
+      right: 10%;
+      animation-delay: -5s;
+    }
+
+    .particle:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      bottom: 20%;
+      left: 80%;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-30px) rotate(120deg); }
+      66% { transform: translateY(15px) rotate(240deg); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: -80px auto 0;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      color: #4a5568;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card li {
+      color: #4a5568;
+      margin-bottom: 0.8rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #667eea;
+      font-weight: bold;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    /* Contact Section */
+    .contact-info {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-info::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      border: 2px solid transparent;
+    }
+
+    .contact-link:hover {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: #667eea;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background: #2d3748;
+      color: white;
+      text-align: center;
+      padding: 3rem 0;
+      margin-top: 4rem;
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: #a0aec0;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #667eea;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Scroll animations */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+
+    .animate-on-scroll.animated {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
-<body class="font-sans bg-gray-100">
-  <!-- Header Section -->
-  <header class="header-bg text-white py-24 text-center rounded-b-lg shadow-lg">
-    <div class="header-content">
-      <h1 class="text-5xl md:text-6xl font-extrabold mb-4 animate-fade-in-down">QuerySmart AI LLC</h1>
-      <p class="text-xl md:text-2xl font-light animate-fade-in-up">Innovative Technical Solutions for a Smarter Future</p>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">QuerySmart AI</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
-  </header>
+  </nav>
 
-  <!-- Main Content Grid -->
-  <section class="container mx-auto p-8 md:p-12 -mt-16 relative z-10">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="hero-content">
+      <h1>QuerySmart AI LLC</h1>
+      <p>Innovative Technical Solutions for a Smarter Future</p>
+      <a href="#about" class="cta-button">
+        <i class="fas fa-arrow-down"></i>
+        Discover More
+      </a>
+    </div>
+  </section>
 
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-grid">
       <!-- About Section -->
-      <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">About Us</h2>
-        <p class="text-gray-700 leading-relaxed">
-          We are QuerySmart AI LLC, a dynamic team of passionate graduate students specializing in Data Science, Cybersecurity, Computer Science, and Civil Engineering. We leverage our diverse expertise and cutting-edge AI to deliver comprehensive technical solutions tailored to your unique challenges. Our mission is to transform complex problems into intelligent, actionable insights and robust systems.
+      <div class="card animate-on-scroll" id="about">
+        <div class="card-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h2>About Us</h2>
+        <p>
+          We are QuerySmart AI LLC, a dynamic team of passionate graduate students specializing in Data Science, Cybersecurity, Computer Science, and Civil Engineering. We leverage our diverse expertise and cutting-edge AI to deliver comprehensive technical solutions tailored to your unique challenges.
+        </p>
+        <p>
+          Our mission is to transform complex problems into intelligent, actionable insights and robust systems.
         </p>
       </div>
 
-      <!-- What We Offer Section -->
-      <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">What We Offer</h2>
-        <ul class="list-disc list-inside text-gray-700 space-y-2">
-          <li><strong>Advanced AI/ML Solutions:</strong> From predictive analytics to intelligent automation.</li>
-          <li><strong>Cybersecurity Consulting:</strong> Robust defense strategies and vulnerability assessments.</li>
-          <li><strong>Custom Software Development:</strong> Scalable applications and system integrations.</li>
-          <li><strong>Data Engineering & Analytics:</strong> Building data pipelines and insightful dashboards.</li>
-          <li><strong>Infrastructure & Smart Systems:</strong> Solutions leveraging civil engineering principles for smart cities and IoT.</li>
-          <li><strong>Technical Consulting & Training:</strong> Empowering your team with the latest knowledge.</li>
+      <!-- Services Section -->
+      <div class="card animate-on-scroll" id="services">
+        <div class="card-icon">
+          <i class="fas fa-cogs"></i>
+        </div>
+        <h2>What We Offer</h2>
+        <ul>
+          <li>Advanced AI/ML Solutions: From predictive analytics to intelligent automation</li>
+          <li>Cybersecurity Consulting: Robust defense strategies and vulnerability assessments</li>
+          <li>Custom Software Development: Scalable applications and system integrations</li>
+          <li>Data Engineering & Analytics: Building data pipelines and insightful dashboards</li>
+          <li>Infrastructure & Smart Systems: Solutions for smart cities and IoT</li>
+          <li>Technical Consulting & Training: Empowering your team with the latest knowledge</li>
         </ul>
       </div>
 
       <!-- Expertise Section -->
-      <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Expertise</h2>
-        <p class="text-gray-700 leading-relaxed mb-4">
+      <div class="card animate-on-scroll">
+        <div class="card-icon">
+          <i class="fas fa-brain"></i>
+        </div>
+        <h2>Our Expertise</h2>
+        <p>
           Our team's interdisciplinary background allows us to approach problems from multiple angles, providing holistic and innovative solutions.
         </p>
-        <div class="flex flex-wrap gap-2">
-          <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Data Science</span>
-          <span class="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">Cybersecurity</span>
-          <span class="bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full">Computer Science</span>
-          <span class="bg-yellow-100 text-yellow-800 text-sm font-medium px-3 py-1 rounded-full">Civil Engineering</span>
-          <span class="bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">AI/ML</span>
-          <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">Software Development</span>
+        <div class="tags">
+          <span class="tag">Data Science</span>
+          <span class="tag">Cybersecurity</span>
+          <span class="tag">Computer Science</span>
+          <span class="tag">Civil Engineering</span>
+          <span class="tag">AI/ML</span>
+          <span class="tag">Software Development</span>
         </div>
       </div>
-
-      <!-- Contact Section -->
-      <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 col-span-1 md:col-span-2 lg:col-span-1">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Get in Touch</h2>
-        <p class="text-gray-700 mb-2"><strong>GitHub:</strong> <a href="https://github.com/Girim9912/NLtoSQL-AI" target="_blank" class="text-blue-600 hover:underline">Girim9912/NLtoSQL-AI</a></p>
-        <p class="text-gray-700 mb-2"><strong>Email:</strong> <a href="mailto:merugu.giri@hotmail.com" class="text-blue-600 hover:underline">merugu.giri@hotmail.com</a></p>
-        <p class="text-gray-700"><strong>Location:</strong> Connecticut, USA</p>
-      </div>
-
     </div>
-  </section>
+
+    <!-- Contact Section -->
+    <div class="contact-info animate-on-scroll" id="contact">
+      <div class="card-icon" style="margin: 0 auto 1.5rem;">
+        <i class="fas fa-envelope"></i>
+      </div>
+      <h2>Get in Touch</h2>
+      <p>Ready to transform your ideas into reality? Let's discuss how we can help you achieve your goals.</p>
+      
+      <div class="contact-links">
+        <a href="https://github.com/Girim9912/NLtoSQL-AI" target="_blank" class="contact-link">
+          <i class="fab fa-github"></i>
+          GitHub
+        </a>
+        <a href="mailto:merugu.giri@hotmail.com" class="contact-link">
+          <i class="fas fa-envelope"></i>
+          Email
+        </a>
+        <a href="careers.html" class="contact-link">
+          <i class="fas fa-briefcase"></i>
+          Join Our Team
+        </a>
+      </div>
+      
+      <p style="margin-top: 2rem; color: #4a5568;">
+        <i class="fas fa-map-marker-alt"></i>
+        Connecticut, USA
+      </p>
+    </div>
+  </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-800 text-white text-center p-6 mt-12">
-    <p>&copy; 2025 QuerySmart AI LLC. All rights reserved.</p>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="careers.html">Careers</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <p>&copy; 2025 QuerySmart AI LLC. All rights reserved.</p>
+    </div>
   </footer>
+
+  <script>
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Navigation background on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 100) {
+        nav.style.background = 'rgba(255, 255, 255, 0.98)';
+        nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+      } else {
+        nav.style.background = 'rgba(255, 255, 255, 0.95)';
+        nav.style.boxShadow = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
