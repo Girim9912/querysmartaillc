@@ -5,7 +5,7 @@ body {
   background-color: #f4f4f4;
 }
 header {
-  background: url('https://images.unsplash.com/photo-1534081333815-ae5019106621') no-repeat center center/cover;
+  background: url('Pictures/Technology\ Consulting\ &\ Implementation_1.webp') no-repeat center center/cover;
   color: white;
   padding: 100px 20px;
   text-align: center;
@@ -36,4 +36,46 @@ h2 {
 a {
   color: #0077cc;
   text-decoration: none;
+}
+
+
+.service-card {
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* dark overlay */
+  z-index: 0;
+}
+
+.service-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Backgrounds */
+.bg-ai {
+  background-image: url('images/ai.jpg');
+}
+.bg-consulting {
+  background-image: url('images/consulting.jpg');
+}
+.bg-cyber {
+  background-image: url('images/cyber.jpg');
+}
+.bg-data {
+  background-image: url('images/data.jpg');
+}
+.bg-iot {
+  background-image: url('images/iot.jpg');
+}
+.bg-cloud {
+  background-image: url('images/cloud.jpg');
 }

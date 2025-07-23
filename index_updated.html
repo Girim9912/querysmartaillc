@@ -19,7 +19,6 @@
         }
 
         body {
-            
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
@@ -150,43 +149,17 @@
         }
 
         .service-card {
-            position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: white;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* Dark overlay for better text readability */
-        .service-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            z-index: 1;
-        }
-
-        .service-card > * {
-            position: relative;
-            z-index: 2;
+            border: 1px solid #e9ecef;
         }
 
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .service-icon {
@@ -197,49 +170,12 @@
         .service-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: white;
+            color: #4a5568;
         }
 
         .service-card p {
-            color: rgba(255, 255, 255, 0.9);
+            color: #6c757d;
             margin-bottom: 1rem;
-        }
-
-        /* Background Images for Service Cards */
-        .bg-ai {
-            background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%), 
-                              url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-consulting {
-            background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%), 
-                              url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-cyber {
-            background-image: linear-gradient(135deg, #fa709a 0%, #fee140 100%), 
-                              url('https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-data {
-            background-image: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%), 
-                              url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-iot {
-            background-image: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%), 
-                              url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-cloud {
-            background-image: linear-gradient(135deg, #a8caba 0%, #5d4e75 100%), 
-                              url('https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600');
-            background-blend-mode: overlay;
         }
 
         /* API Marketplace */
@@ -443,38 +379,37 @@
         <div class="container">
             <h2 class="section-title">Our Comprehensive Services</h2>
             <div class="services-grid">
-                
-                <div class="service-card bg-ai">
+                <div class="service-card bg-ai>
                     <div class="service-icon">🤖</div>
                     <h3>AI & Machine Learning Development</h3>
                     <p>Custom AI solutions, predictive analytics, and intelligent automation systems tailored to your business needs.</p>
                     <a href="#contact" class="btn btn-primary">Learn More</a>
                 </div>
-                <div class="service-card bg-consulting">
+                <div class="service-card bg-consulting>
                     <div class="service-icon">💻</div>
                     <h3>Technology Consulting & Implementation</h3>
                     <p>Strategic technology guidance, system architecture design, and end-to-end implementation support.</p>
                     <a href="#contact" class="btn btn-primary">Learn More</a>
                 </div>
-                <div class="service-card bg-cyber">
+                <div class="service-card bg-cyber>
                     <div class="service-icon">🔒</div>
                     <h3>Cybersecurity & Infrastructure</h3>
                     <p>Comprehensive security audits, vulnerability assessments, and robust defense strategies.</p>
                     <a href="#contact" class="btn btn-primary">Learn More</a>
                 </div>
-                <div class="service-card bg-data">
+                <div class="service-card bg-data>
                     <div class="service-icon">📊</div>
                     <h3>Data Engineering & Analytics</h3>
                     <p>Scalable data pipelines, real-time analytics, and insightful dashboards for data-driven decisions.</p>
                     <a href="#contact" class="btn btn-primary">Learn More</a>
                 </div>
-                <div class="service-card bg-iot">
+                <div class="service-card bg-iot>
                     <div class="service-icon">🌐</div>
                     <h3>Embedded & IoT Analytics</h3>
                     <p>Smart systems for IoT devices, edge computing solutions, and embedded analytics platforms.</p>
                     <a href="#contact" class="btn btn-primary">Learn More</a>
                 </div>
-                <div class="service-card bg-cloud">
+                <div class="service-card bg-cloud>
                     <div class="service-icon">☁️</div>
                     <h3>Cloud Migration & API Design</h3>
                     <p>Seamless cloud transitions, API architecture, and deployment pipeline optimization.</p>
