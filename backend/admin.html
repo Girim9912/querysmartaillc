@@ -1,0 +1,23 @@
+<section id="admin">
+  <div class="container">
+    <h1>Applications Dashboard</h1>
+    <button onclick="loadApps()">Load Applications</button>
+    <ul id="appList"></ul>
+  </div>
+</section>
+
+<script>
+async function loadApps() {
+  const res = await fetch("https://your-backend.onrender.com/api/applications", {
+    headers: { "x-admin-token": "your_admin_token" }
+  });
+  const data = await res.json();
+  const list = document.getElementById("appList");
+  list.innerHTML = "";
+  data.forEach(app => {
+    const li = document.createElement("li");
+    li.innerHTML = `${app.name} - ${app.email} - <a href="${app.resume_url}" target="_blank">Resume</a>`;
+    list.appendChild(li);
+  });
+}
+</script>
