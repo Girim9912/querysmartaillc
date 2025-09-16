@@ -2,31 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Careers - QuerySmart AI LLC</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    body { font-family: Arial, sans-serif; background:#f9fafb; margin:0; padding:0; }
-    .container { max-width: 700px; margin: 50px auto; background:white; padding:30px; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
-    h1 { text-align:center; color:#222; }
-    form { display:flex; flex-direction:column; }
-    label { margin:10px 0 5px; }
-    input, textarea { padding:10px; border:1px solid #ddd; border-radius:6px; font-size:1rem; }
-    button { margin-top:15px; padding:12px; background:#0073e6; color:white; border:none; border-radius:6px; font-size:1rem; cursor:pointer; }
-    button:hover { background:#005bb5; }
+    .careers-container { max-width: 700px; margin: 3rem auto; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    h1, h2 { text-align: center; }
+    label { display: block; margin-top: 1rem; font-weight: bold; }
+    input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-top: .5rem; }
+    button { margin-top: 1.5rem; width: 100%; padding: 12px; background: #0073e6; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #005bb5; }
+    #careerStatus { text-align: center; margin-top: 1rem; font-weight: bold; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Careers at QuerySmart AI LLC</h1>
-    <p>Please complete the form below to apply for open positions. Our HR team will review and contact you.</p>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="careers.html" class="active">Careers</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <form id="applicationForm" enctype="multipart/form-data">
+  <main class="careers-container">
+    <h1>Careers at QuerySmart AI LLC</h1>
+    <p>We’re always looking for talented individuals. Apply below and our team will get back to you.</p>
+
+    <form id="careerForm" enctype="multipart/form-data">
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" required>
 
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required>
 
-      <label for="phone">Phone Number</label>
+      <label for="phone">Phone</label>
       <input type="tel" id="phone" name="phone" required>
 
       <label for="position">Position Applying For</label>
@@ -40,30 +51,40 @@
 
       <button type="submit">Submit Application</button>
     </form>
-    <p id="status"></p>
-  </div>
+
+    <p id="careerStatus"></p>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 QuerySmart AI LLC. All rights reserved.</p>
+  </footer>
 
 <script>
-const backend = "https://your-backend.onrender.com"; // Replace with Render backend
-const token = "your_admin_token";
+const backend = "https://your-backend.onrender.com"; // replace with your Render URL
+const token = "your_admin_token"; // replace with your secret token
 
-document.getElementById("applicationForm").addEventListener("submit", async (e) => {
+document.getElementById("careerForm").addEventListener("submit", async (e) => {
   e.preventDefault();
+  const formData = new FormData(e.target);
 
-  const formData = new FormData(document.getElementById("applicationForm"));
+  try {
+    const res = await fetch(backend + "/api/apply", {
+      method: "POST",
+      headers: { "x-admin-token": token },
+      body: formData
+    });
 
-  const res = await fetch(backend + "/api/apply", {
-    method: "POST",
-    headers: { "x-admin-token": token },
-    body: formData
-  });
-
-  const status = document.getElementById("status");
-  if (res.ok) {
-    status.textContent = "✅ Application submitted successfully!";
-    document.getElementById("applicationForm").reset();
-  } else {
-    status.textContent = "❌ Error submitting application.";
+    const status = document.getElementById("careerStatus");
+    if (res.ok) {
+      status.textContent = "✅ Application submitted successfully!";
+      status.style.color = "green";
+      e.target.reset();
+    } else {
+      status.textContent = "❌ Error submitting application.";
+      status.style.color = "red";
+    }
+  } catch (err) {
+    document.getElementById("careerStatus").textContent = "⚠️ Network error.";
   }
 });
 </script>

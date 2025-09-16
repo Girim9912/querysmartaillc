@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - QuerySmart AI LLC</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-container { max-width: 900px; margin: 3rem auto; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    h1 { text-align: center; }
+    button { display: block; margin: 1rem auto; padding: 10px 20px; background:#0073e6; color:white; border:none; border-radius:6px; cursor:pointer; }
+    button:hover { background:#005bb5; }
+    .application { border:1px solid #ddd; padding:1rem; margin:1rem 0; border-radius:8px; }
+    .application h3 { margin:0 0 .5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="admin.html" class="active">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <h1>Applications Dashboard</h1>
+    <button onclick="loadApps()">Load Applications</button>
+    <div id="appList"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 QuerySmart AI LLC. All rights reserved.</p>
+  </footer>
+
+<script>
+const backend = "https://your-backend.onrender.com"; // replace with your Render backend
+const token = "your_admin_token";
+
+async function loadApps() {
+  try {
+    const res = await fetch(backend + "/api/applications", {
+      headers: { "x-admin-token": token }
+    });
+    const apps = await res.json();
+
+    const list = document.getElementById("appList");
+    list.innerHTML = "";
+
+    if (apps.length === 0) {
+      list.innerHTML = "<p>No applications yet.</p>";
+      return;
+    }
+
+    apps.forEach(app => {
+      const div = document.createElement("div");
+      div.className = "application";
+      div.innerHTML = `
+        <h3>${app.name} (${app.email}, ${app.phone})</h3>
+        <p><strong>Position:</strong> ${app.position}</p>
+        <p><strong>Cover Letter:</strong> ${app.cover}</p>
+        <p><a href="${backend}${app.resume_url}" target="_blank">📄 View Resume</a></p>
+      `;
+      list.appendChild(div);
+    });
+  } catch (err) {
+    document.getElementById("appList").innerHTML = "<p>⚠️ Error loading applications.</p>";
+  }
+}
+</script>
+</body>
+</html>

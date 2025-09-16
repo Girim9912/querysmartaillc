@@ -19,17 +19,54 @@
         }
 
         body {
-            
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+
+        /* Video Background Styles */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
+        }
+
+        .video-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+            z-index: 1;
+        }
+
+        /* Fallback background for when video isn't available */
+        .video-background.fallback {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         /* Header */
@@ -75,15 +112,26 @@
 
         /* Hero Section */
         .hero {
+            position: relative;
             padding: 120px 0 80px;
             text-align: center;
             color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
         }
 
         .hero p {
@@ -92,6 +140,8 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out 0.3s both;
         }
 
         .cta-buttons {
@@ -99,6 +149,18 @@
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .btn {
@@ -126,13 +188,49 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Video Controls */
+        .video-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            gap: 10px;
+        }
+
+        .video-control-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-control-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+        }
+
+        .video-control-btn i {
+            font-size: 18px;
+            color: #667eea;
         }
 
         /* Services Section */
         .services {
             padding: 80px 0;
             background: white;
+            position: relative;
+            z-index: 2;
         }
 
         .section-title {
@@ -247,6 +345,8 @@
             padding: 80px 0;
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
+            position: relative;
+            z-index: 2;
         }
 
         .api-grid {
@@ -287,6 +387,8 @@
         .industries {
             padding: 80px 0;
             background: #f8f9fa;
+            position: relative;
+            z-index: 2;
         }
 
         .industry-grid {
@@ -313,6 +415,8 @@
         .about {
             padding: 80px 0;
             background: white;
+            position: relative;
+            z-index: 2;
         }
 
         .about-content {
@@ -333,6 +437,8 @@
         .roadmap {
             padding: 80px 0;
             background: #f8f9fa;
+            position: relative;
+            z-index: 2;
         }
 
         .roadmap-timeline {
@@ -362,6 +468,8 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .contact-info {
@@ -389,9 +497,11 @@
             color: white;
             text-align: center;
             padding: 2rem 0;
+            position: relative;
+            z-index: 2;
         }
 
-        /* Responsive */
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -409,10 +519,65 @@
                 flex-direction: column;
                 gap: 1rem;
             }
+
+            .video-controls {
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .video-control-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .video-control-btn i {
+                font-size: 14px;
+            }
+
+            /* On mobile, reduce video overlay for better performance */
+            .video-background::after {
+                background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+            }
+        }
+
+        /* Prefers reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .video-background video {
+                display: none;
+            }
+            
+            .video-background {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+
+            .hero h1,
+            .hero p,
+            .cta-buttons {
+                animation: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Video Background -->
+    <div class="video-background" id="videoBackground">
+        <video id="bgVideo" autoplay muted loop playsinline>
+            <source src="https://cdn.coverr.co/videos/coverr-ai-technology-digital-transformation-7532/1080p.mp4" type="video/mp4">
+            <source src="https://cdn.coverr.co/videos/coverr-digital-data-visualization-7533/1080p.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Video Controls -->
+    <div class="video-controls">
+        <button class="video-control-btn" id="playPauseBtn" title="Play/Pause Video">
+            <i class="fas fa-pause"></i>
+        </button>
+        <button class="video-control-btn" id="muteBtn" title="Mute/Unmute Video">
+            <i class="fas fa-volume-mute"></i>
+        </button>
+    </div>
+
     <header>
         <nav class="container">
             <div class="logo">QuerySmart AI</div>
@@ -428,13 +593,15 @@
     </header>
 
     <section id="home" class="hero">
-        <div class="container">
-            <h1>Transform Your Business with AI</h1>
-            <p>Empowering non-technical users and growing companies to harness AI for faster, smarter decisions through our hybrid model of consulting services, AI-powered APIs, and infrastructure solutions.</p>
-            <div class="cta-buttons">
-                <a href="#services" class="btn btn-primary">Explore Services</a>
-                <a href="#apis" class="btn btn-secondary">Browse APIs</a>
-                <a href="#contact" class="btn btn-secondary">Get Consultation</a>
+        <div class="hero-content">
+            <div class="container">
+                <h1>Transform Your Business with AI</h1>
+                <p>Empowering non-technical users and growing companies to harness AI for faster, smarter decisions through our hybrid model of consulting services, AI-powered APIs, and infrastructure solutions.</p>
+                <div class="cta-buttons">
+                    <a href="#services" class="btn btn-primary">Explore Services</a>
+                    <a href="#apis" class="btn btn-secondary">Browse APIs</a>
+                    <a href="#contact" class="btn btn-secondary">Get Consultation</a>
+                </div>
             </div>
         </div>
     </section>
@@ -635,46 +802,3 @@
                     <span>Connecticut, USA</span>
                 </div>
             </div>
-        </div>
-    </section>
-    <section id="contact-home" class="contact-home">
-
-  <div class="container">
-    <h2>Contact Us</h2>
-    <p>We’d love to hear from you! Reach us at:</p>
-    
-    <ul class="contact-list">
-      <li>📧 Careers: <a href="mailto:careers@querysmartaillc.com">careers@querysmartaillc.com</a></li>
-    </ul>
-  </div>
-</section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 QuerySmart AI LLC. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        });
-    </script>
-</body>
-</html>
