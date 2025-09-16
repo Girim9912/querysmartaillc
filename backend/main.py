@@ -94,7 +94,7 @@ def list_applications(x_admin_token: Optional[str] = Header(None)):
             "phone": r[3],
             "position": r[4],
             "cover": r[5],
-            "resume_url": f"/{r[6]}"
+            "resume_url": f"/{r[6]}",
             "resume_url": f"/resumes/{os.path.basename(r[6])}"
         })
     return apps
