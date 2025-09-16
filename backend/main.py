@@ -4,15 +4,6 @@ import sqlite3, os
 from typing import Optional
 from fastapi.staticfiles import StaticFiles
 
-# Serve resumes folder publicly (read-only)
-app.mount("/resumes", StaticFiles(directory="resumes"), name="resumes")
-
-# === CONFIG ===
-ADMIN_TOKEN = os.getenv("ADMIN_TOKEN", "supersecrettoken")
-DB_PATH = "applications.db"
-RESUME_DIR = "resumes"
-os.makedirs(RESUME_DIR, exist_ok=True)
-
 # === APP SETUP ===
 app = FastAPI()
 app.add_middleware(
@@ -22,6 +13,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve resumes folder publicly (read-only)
+app.mount("/resumes", StaticFiles(directory="resumes"), name="resumes")
+
+# === CONFIG ===
+ADMIN_TOKEN = os.getenv("ADMIN_TOKEN", "supersecrettoken")
+DB_PATH = "applications.db"
+RESUME_DIR = "resumes"
+os.makedirs(RESUME_DIR, exist_ok=True)
+
+
 
 # === INIT DB ===
 conn = sqlite3.connect(DB_PATH)
