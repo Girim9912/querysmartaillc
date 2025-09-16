@@ -4,6 +4,7 @@ import sqlite3, os
 from typing import Optional
 from fastapi.staticfiles import StaticFiles
 
+
 # === APP SETUP ===
 app = FastAPI()
 app.add_middleware(
