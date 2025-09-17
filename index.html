@@ -3,847 +3,1132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuerySmart AI – AI-Powered Natural Language to SQL</title>
-  <meta name="description" content="QuerySmart AI builds tools that convert natural language into SQL queries using large language models. Empower your team to access data without writing code.">
-  <meta name="keywords" content="NLtoSQL, AI SQL generator, GPT for SQL, QuerySmart AI, AI data tools, natural language processing, SQL automation, OpenAI, data science">
+  <title>QuerySmart AI – Aviation, Quantum Computing & AI Solutions</title>
+  <meta name="description" content="QuerySmart AI pioneers aviation exploration, quantum computing, and AI solutions. From natural language SQL to aerospace innovation.">
+  <meta name="keywords" content="Aviation, Quantum Computing, AI, SQL, QuerySmart AI, Aerospace, Connecticut">
   <meta name="author" content="Giri Merugu">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <meta name="google-site-verification" content="_PbuZap9V0tfoXmMLPaVTCLCbQtlIJ2kfu3vRv5VP4E" />
   
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Video Background Styles */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .video-background video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translateX(-50%) translateY(-50%);
-            object-fit: cover;
-        }
-
-        .video-background::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
-            z-index: 1;
-        }
-
-        /* Fallback background for when video isn't available */
-        .video-background.fallback {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #4a5568;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #4a5568;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            padding: 120px 0 80px;
-            text-align: center;
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease-out 0.6s both;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: white;
-            color: #667eea;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        /* Video Controls */
-        .video-controls {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1001;
-            display: flex;
-            gap: 10px;
-        }
-
-        .video-control-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-        }
-
-        .video-control-btn:hover {
-            background: rgba(255, 255, 255, 1);
-            transform: scale(1.1);
-        }
-
-        .video-control-btn i {
-            font-size: 18px;
-            color: #667eea;
-        }
-
-        /* Services Section */
-        .services {
-            padding: 80px 0;
-            background: white;
-            position: relative;
-            z-index: 2;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #4a5568;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .service-card {
-            position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* Dark overlay for better text readability */
-        .service-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            z-index: 1;
-        }
-
-        .service-card > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .service-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .service-card p {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1rem;
-        }
-
-        /* Background Images for Service Cards */
-        .bg-ai {
-            background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%), 
-                              url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-consulting {
-            background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%), 
-                              url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-cyber {
-            background-image: linear-gradient(135deg, #fa709a 0%, #fee140 100%), 
-                              url('https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-data {
-            background-image: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%), 
-                              url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-iot {
-            background-image: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%), 
-                              url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600');
-            background-blend-mode: overlay;
-        }
-
-        .bg-cloud {
-            background-image: linear-gradient(135deg, #a8caba 0%, #5d4e75 100%), 
-                              url('https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600');
-            background-blend-mode: overlay;
-        }
-
-        /* API Marketplace */
-        .api-marketplace {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            position: relative;
-            z-index: 2;
-        }
-
-        .api-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .api-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s;
-        }
-
-        .api-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .api-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .price-tag {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 1rem;
-            font-weight: bold;
-        }
-
-        /* Industries */
-        .industries {
-            padding: 80px 0;
-            background: #f8f9fa;
-            position: relative;
-            z-index: 2;
-        }
-
-        .industry-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .industry-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .industry-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* About Section */
-        .about {
-            padding: 80px 0;
-            background: white;
-            position: relative;
-            z-index: 2;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .founder-info {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-        }
-
-        /* Roadmap */
-        .roadmap {
-            padding: 80px 0;
-            background: #f8f9fa;
-            position: relative;
-            z-index: 2;
-        }
-
-        .roadmap-timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 3rem auto;
-        }
-
-        .roadmap-item {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            border-left: 4px solid #667eea;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .roadmap-date {
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Contact */
-        .contact {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .contact-item a {
-            color: white;
-            text-decoration: none;
-        }
-
-        /* Footer */
-        footer {
-            background: #2d3748;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Mobile Optimizations */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-info {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .video-controls {
-                bottom: 10px;
-                right: 10px;
-            }
-
-            .video-control-btn {
-                width: 40px;
-                height: 40px;
-            }
-
-            .video-control-btn i {
-                font-size: 14px;
-            }
-
-            /* On mobile, reduce video overlay for better performance */
-            .video-background::after {
-                background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
-            }
-        }
-
-        /* Prefers reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            .video-background video {
-                display: none;
-            }
-            
-            .video-background {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            }
-
-            .hero h1,
-            .hero p,
-            .cta-buttons {
-                animation: none;
-            }
-        }
-    </style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-black: #000000;
+      --secondary-black: #1a1a1a;
+      --accent-white: #ffffff;
+      --accent-blue: #0099ff;
+      --text-gray: #666666;
+      --border-gray: #333333;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: var(--accent-white);
+      background: var(--primary-black);
+      overflow-x: hidden;
+    }
+
+    /* Header - Tesla/SpaceX Style */
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
+      border-bottom: 1px solid var(--border-gray);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-icon::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
+      z-index: 1;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-white);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 3rem;
+    }
+
+    .nav-menu a {
+      color: var(--accent-white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-blue);
+      transition: width 0.3s ease;
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    .mobile-menu {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--accent-white);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero Section - SpaceX Style */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=1920') center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 30% 20%, rgba(0, 153, 255, 0.1), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.1), transparent 50%);
+      animation: float 20s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(1deg); }
+      66% { transform: translateY(10px) rotate(-1deg); }
+    }
+
+    .hero-content {
+      max-width: 800px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -2px;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      font-weight: 300;
+      margin-bottom: 3rem;
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.5px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 15px 35px;
+      border: none;
+      background: var(--accent-blue);
+      color: var(--accent-white);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 153, 255, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--accent-blue);
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-indicator::after {
+      content: '↓';
+      color: var(--accent-white);
+      font-size: 2rem;
+      opacity: 0.7;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* Main Sections */
+    .section {
+      padding: 120px 0;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: -1px;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-gray);
+      margin-bottom: 4rem;
+      font-weight: 300;
+    }
+
+    /* Services Grid - Tesla Style */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 0;
+      margin-top: 4rem;
+    }
+
+    .service-card {
+      background: var(--secondary-black);
+      border: 1px solid var(--border-gray);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: var(--accent-blue);
+    }
+
+    .service-hero {
+      height: 300px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .service-hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8));
+    }
+
+    .service-content {
+      padding: 2rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-blue);
+    }
+
+    .service-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--accent-white);
+    }
+
+    .service-description {
+      color: var(--text-gray);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+
+    .service-link {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .service-link:hover {
+      gap: 15px;
+    }
+
+    /* Stats Section */
+    .stats {
+      background: var(--secondary-black);
+      padding: 80px 0;
+      border-top: 1px solid var(--border-gray);
+      border-bottom: 1px solid var(--border-gray);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 2rem;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: var(--text-gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Technology Showcase */
+    .tech-showcase {
+      background: var(--primary-black);
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .tech-card {
+      background: linear-gradient(135deg, var(--secondary-black), #2a2a2a);
+      border: 1px solid var(--border-gray);
+      border-radius: 12px;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tech-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), #00d4ff);
+    }
+
+    .tech-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-blue);
+      box-shadow: 0 15px 30px rgba(0, 153, 255, 0.1);
+    }
+
+    .tech-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-blue);
+    }
+
+    .tech-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--accent-white);
+    }
+
+    .tech-description {
+      color: var(--text-gray);
+      line-height: 1.6;
+    }
+
+    /* Contact Section - SpaceX Style */
+    .contact {
+      background: linear-gradient(135deg, var(--secondary-black), var(--primary-black));
+      padding: 120px 0;
+      text-align: center;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 3rem auto 0;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--accent-white);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 15px 20px;
+      background: var(--secondary-black);
+      border: 1px solid var(--border-gray);
+      color: var(--accent-white);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .contact-item a {
+      color: var(--accent-white);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover {
+      color: var(--accent-blue);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary-black);
+      border-top: 1px solid var(--border-gray);
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .footer-text {
+      color: var(--text-gray);
+      margin-bottom: 1rem;
+    }
+
+    .footer-tagline {
+      color: var(--accent-blue);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .mobile-menu {
+        display: block;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        min-height: 400px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+
+      .tech-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-info {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .section {
+        padding: 80px 1rem;
+      }
+
+      .nav {
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 80%;
+        justify-content: center;
+      }
+    }
+
+    /* Animations */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--primary-black);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-gray);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-blue);
+    }
+  </style>
 </head>
+
 <body>
-    <!-- Video Background -->
-    <div class="video-background" id="videoBackground">
-        <video id="bgVideo" autoplay muted loop playsinline>
-            <source src="https://cdn.coverr.co/videos/coverr-ai-technology-digital-transformation-7532/1080p.mp4" type="video/mp4">
-            <source src="https://cdn.coverr.co/videos/coverr-digital-data-visualization-7533/1080p.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
+  <header class="header" id="header">
+    <nav class="nav">
+      <a href="#home" class="logo">
+        <div class="logo-icon">
+          <img src="images/Quibits.png" alt="QuerySmart AI Logo">
+        </div>
+        <div class="logo-text">QuerySmart AI</div>
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Solutions</a></li>
+        <li><a href="#technology">Technology</a></li>
+        <li><a href="#about">Mission</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="mobile-menu" id="mobile-menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
+  </header>
 
-    <!-- Video Controls -->
-    <div class="video-controls">
-        <button class="video-control-btn" id="playPauseBtn" title="Play/Pause Video">
-            <i class="fas fa-pause"></i>
-        </button>
-        <button class="video-control-btn" id="muteBtn" title="Mute/Unmute Video">
-            <i class="fas fa-volume-mute"></i>
-        </button>
-    </div>
-
-    <header>
-        <nav class="container">
-            <div class="logo">QuerySmart AI</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#apis">APIs</a></li>
-                <li><a href="#industries">Industries</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section id="home" class="hero">
+  <section id="home" class="hero">
     <div class="hero-content">
-        <div class="container">
-        <h1>Pioneering Aviation Exploration & Quantum Computing</h1>
-        <p>At QuerySmart LLC, we are shaping the future by combining aviation innovation, quantum computing breakthroughs, and advanced equipment manufacturing to unlock the next frontier of exploration and technology.</p>
-        <div class="cta-buttons">
-            <a href="#services" class="btn btn-primary">Explore Our Focus</a>
-            <a href="#about" class="btn btn-secondary">Learn More</a>
-            <a href="#contact" class="btn btn-secondary">Partner With Us</a>
-        </div>
-        </div>
+      <h1 class="hero-title">Pioneering the Future</h1>
+      <p class="hero-subtitle">
+        Advancing aviation exploration through quantum computing breakthroughs and intelligent data solutions that unlock new frontiers of discovery
+      </p>
+      <div class="cta-buttons">
+        <a href="#services" class="btn">
+          Explore Solutions
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <a href="#technology" class="btn btn-secondary">
+          View Technology
+        </a>
+      </div>
     </div>
-    </section>
+    <div class="scroll-indicator"></div>
+  </section>
 
-
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title">Our Comprehensive Services</h2>
-            <div class="services-grid">
-
-
-                <div class="service-card bg-ai" style="background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%), url('https://images.unsplash.com/photo-1614064641938-9c84e1f8da8f?w=800');">
-                    <div class="service-icon">⚛️</div>
-                    <h3>Quantum Computing Solutions</h3>
-                    <p>Designing algorithms, simulation platforms, and advanced applications to bring the power of quantum computing into aerospace and beyond.</p>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
-                </div>
-
-                <div class="service-card bg-consulting" style="background-image: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%), url('https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800');">
-                    <div class="service-icon">✈️</div>
-                    <h3>Aviation Exploration</h3>
-                    <p>Innovating for the skies and space: advanced flight optimization, sensing, and technologies that enable next-generation exploration.</p>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
-                </div>
-
-                <div class="service-card bg-cyber" style="background-image: linear-gradient(135deg, #fa709a 0%, #fee140 100%), url('https://images.unsplash.com/photo-1549924231-f129b911e442?w=800');">
-                    <div class="service-icon">🛠️</div>
-                    <h3>Aviation Equipment Manufacturing</h3>
-                    <p>Prototyping and manufacturing advanced aviation equipment using modern materials and precision engineering for safety and performance.</p>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
-                </div>
-                <div class="service-card bg-ai">
-                    <div class="service-icon">🤖</div>
-                    <h3>AI & Machine Learning Development</h3>
-                    <p>Custom AI solutions, predictive analytics, and intelligent automation systems tailored to your business needs.</p>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
-                </div>
-                <div class="service-card bg-consulting">
-                    <div class="service-icon">💻</div>
-                    <h3>Technology Consulting & Implementation</h3>
-                    <p>Strategic technology guidance, system architecture design, and end-to-end implementation support.</p>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
-                </div>
-                <div class="service-card bg-cyber">
-                    <div class="service-icon">🔒</div>
-                    <h3>Cybersecurity & Infrastructure</h3>
-                    <p>Comprehensive security audits, vulnerability assessments, and robust defense strategies.</p>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
-                </div>
-                <div class="service-card bg-data">
-                    <div class="service-icon">📊</div>
-                    <h3>Data Engineering & Analytics</h3>
-                    <p>Scalable data pipelines, real-time analytics, and insightful dashboards for data-driven decisions.</p>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
-                </div>
-                <div class="service-card bg-iot">
-                    <div class="service-icon">🌐</div>
-                    <h3>Embedded & IoT Analytics</h3>
-                    <p>Smart systems for IoT devices, edge computing solutions, and embedded analytics platforms.</p>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
-                </div>
-                <div class="service-card bg-cloud">
-                    <div class="service-icon">☁️</div>
-                    <h3>Cloud Migration & API Design</h3>
-                    <p>Seamless cloud transitions, API architecture, and deployment pipeline optimization.</p>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="apis" class="api-marketplace">
-        <div class="container">
-            <h2 class="section-title">AI-Powered APIs</h2>
-            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">Ready-to-use APIs that integrate seamlessly into your applications</p>
-            <div class="api-grid">
-                <div class="api-card">
-                    <h3>🔍 NLtoSQL-AI</h3>
-                    <p>Convert natural language queries into SQL using advanced LLMs. Perfect for non-technical users to interact with databases.</p>
-                    <div class="price-tag">Freemium | Starting at $29/month</div>
-                    <div style="margin-top: 1rem;">
-                        <a href="https://github.com/Girim9912/" class="btn btn-secondary">View on GitHub</a>
-                    </div>
-                </div>
-                <div class="api-card">
-                    <h3>🤖 AI Assistant Builder</h3>
-                    <p>Gradio-based tools and chatbot workflows designed for non-engineers to create custom AI assistants.</p>
-                    <div class="price-tag">Coming Q4 2025</div>
-                    <div style="margin-top: 1rem;">
-                        <a href="#contact" class="btn btn-secondary">Get Early Access</a>
-                    </div>
-                </div>
-                <div class="api-card">
-                    <h3>📈 Predictive Analytics API</h3>
-                    <p>Industry-specific models for forecasting, anomaly detection, and pattern recognition across various domains.</p>
-                    <div class="price-tag">Custom Pricing</div>
-                    <div style="margin-top: 1rem;">
-                        <a href="#contact" class="btn btn-secondary">Request Quote</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="industries" class="industries">
-        <div class="container">
-            <h2 class="section-title">Industries We Serve</h2>
-            <div class="industry-grid">
-                <div class="industry-card">
-                    <div class="service-icon">🏦</div>
-                     <h3>Aerospace & Aviation</h3>
-                    <p>Solutions for aircraft design, optimization, maintenance, and next-gen flight technologies.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="service-icon">🛰️</div>
-                    <h3>Space Exploration</h3>
-                    <p>Advanced sensing, navigation, and mission planning powered by quantum and AI technologies.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="service-icon">🏭</div>
-                    <h3>Advanced Manufacturing</h3>
-                    <p>Precision equipment manufacturing, new materials research, and scalable aerospace production.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="service-icon">⚡</div>
-                    <h3>Quantum Technologies</h3>
-                    <p>Algorithms, sensors, and computing platforms to accelerate breakthroughs across industries.</p>
-                </div>
-                    <h3>FinTech</h3>
-                    <p>Risk assessment, fraud detection, algorithmic trading, and regulatory compliance solutions.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="service-icon">🏥</div>
-                    <h3>Healthcare</h3>
-                    <p>Medical data analysis, patient monitoring systems, and healthcare automation tools.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="service-icon">🏭</div>
-                    <h3>Manufacturing</h3>
-                    <p>Predictive maintenance, quality control, supply chain optimization, and process automation.</p>
-                </div>
-                <div class="industry-card">
-                    <div class="service-icon">🛡️</div>
-                    <h3>Cybersecurity</h3>
-                    <p>Threat detection, security analytics, incident response, and compliance management.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About QuerySmart AI</h2>
-            <div class="about-content">
-                <div>
-                    <h3>Our Mission</h3>
-                    <p>QuerySmart LLC is a Connecticut-based startup dedicated to driving innovation at the intersection of aviation exploration, quantum computing, and equipment manufacturing. Our mission is to empower industries and explorers by building technologies that break barriers and open new frontiers.</p>
-                    <p>From quantum-powered optimization to advanced aerospace equipment, we envision a future where humanity explores further, faster, and smarter.</p>
-                </div> 
-                <div>
-                    <h3>Our Expertise</h3>
-                    <p>Founded by industry professionals with advanced degrees in data science and engineering, QuerySmart LLC combines deep technical expertise with innovative vision.</p>
-                    <p>Our team specializes in AI, machine learning, quantum systems, and aerospace technologies, with extensive experience in technology consulting and implementation.</p>
-                    <p>We're committed to advancing the frontiers of aviation exploration and quantum computing through rigorous research and development.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="roadmap">
-    <div class="container">
-        <h2 class="section-title">Our Roadmap</h2>
-        <div class="roadmap-timeline">
-        <div class="roadmap-item">
-            <div class="roadmap-date">2025</div>
-            <h3>Foundation & Partnerships</h3>
-            <p>Establish R&D collaborations with universities, aerospace labs, and quantum computing partners.</p>
-        </div>
-        <div class="roadmap-item">
-            <div class="roadmap-date">2026</div>
-            <h3>Prototype Development</h3>
-            <p>Launch early prototypes for aviation optimization using quantum algorithms and advanced simulations.</p>
-        </div>
-        <div class="roadmap-item">
-            <div class="roadmap-date">2027</div>
-            <h3>Equipment Certification</h3>
-            <p>Manufacture and certify aviation equipment to meet safety and performance standards.</p>
-        </div>
-        <div class="roadmap-item">
-            <div class="roadmap-date">2028+</div>
-            <h3>Space Exploration Integration</h3>
-            <p>Expand into lunar/planetary mission technologies using quantum sensing and advanced aerospace systems.</p>
-        </div>
-        </div>
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item fade-in-up">
+        <span class="stat-number">2025</span>
+        <span class="stat-label">Founded</span>
+      </div>
+      <div class="stat-item fade-in-up">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Core Technologies</span>
+      </div>
+      <div class="stat-item fade-in-up">
+        <span class="stat-number">∞</span>
+        <span class="stat-label">Possibilities</span>
+      </div>
+      <div class="stat-item fade-in-up">
+        <span class="stat-number">1</span>
+        <span class="stat-label">Vision</span>
+      </div>
     </div>
-    </section>
+  </section>
 
+  <section id="services" class="section">
+    <div class="fade-in-up">
+      <h2 class="section-title">Revolutionary Solutions</h2>
+      <p class="section-subtitle">Three pillars of innovation driving the future of exploration and technology</p>
+    </div>
+    
+    <div class="services-grid">
+      <div class="service-card fade-in-up">
+        <div class="service-hero" style="background-image: url('https://images.unsplash.com/photo-1614064641938-9c84e1f8da8f?w=800');"></div>
+        <div class="service-content">
+          <div class="service-icon">⚛️</div>
+          <h3 class="service-title">Quantum Computing</h3>
+          <p class="service-description">
+            Advanced quantum algorithms and simulation platforms designed for aerospace optimization, complex data processing, and next-generation computing challenges that push the boundaries of what's possible.
+          </p>
+          <a href="#contact" class="service-link">
+            Learn More
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
 
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get in Touch</h2>
-            <p>Ready to transform your ideas into reality? Let's discuss how we can help you achieve your goals.</p>
-            <!-- 🌐 Custom Contact Form with Formspree -->
-            <form action="https://formspree.io/f/mldlnqvo" method="POST" style="max-width: 600px; margin: 2rem auto;">
-            <div style="margin-bottom: 1rem;">
-                <label for="name">Your Name</label><br>
-                <input type="text" id="name" name="name" placeholder="Enter your full name" required style="width: 100%; padding: 10px; border-radius: 8px;">
-            </div>
-            <div style="margin-bottom: 1rem;">
-                <label for="email">Your Email</label><br>
-                <input type="email" id="email" name="email" placeholder="you@example.com" required style="width: 100%; padding: 10px; border-radius: 8px;">
-            </div>
-            <div style="margin-bottom: 1rem;">
-                <label for="phone">Your Phone</label><br>
-                <input type="tel" id="phone" name="phone" placeholder="Optional: +1 (123) 456-7890" style="width: 100%; padding: 10px; border-radius: 8px;">
-            </div>
-            <div style="margin-bottom: 1rem;">
-                <label for="company">Company / Organization</label><br>
-                <input type="text" id="company" name="company" placeholder="Optional: Your company name" style="width: 100%; padding: 10px; border-radius: 8px;">
-            </div>
-            <div style="margin-bottom: 1rem;">
-                <label for="message">Your Message</label><br>
-                <textarea id="message" name="message" placeholder="Tell us how we can help you..." rows="5" required style="width: 100%; padding: 10px; border-radius: 8px;"></textarea>
-            </div>
-            <input type="hidden" name="_subject" value="New contact from QuerySmart AI website">
-            <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <span>📧</span>
-                    <a href="mailto:contact@querysmartaillc.com">contact@querysmartaillc.com</a>
-                </div>
-                <div class="contact-item">
-                    <span>🌐</span>
-                    <a href="https://querysmartaillc.com">querysmartaillc.com</a>
-                </div>
-                <div class="contact-item">
-                    <span>💻</span>
-                    <a href="https://github.com/Girim9912/">GitHub</a>
-                </div>
-                <div class="contact-item">
-                    <span>📍</span>
-                    <span>Connecticut, USA</span>
-                </div>
-            </div>
+      <div class="service-card fade-in-up">
+        <div class="service-hero" style="background-image: url('https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800');"></div>
+        <div class="service-content">
+          <div class="service-icon">🚀</div>
+          <h3 class="service-title">Aviation Exploration</h3>
+          <p class="service-description">
+            Revolutionary flight optimization systems, precision equipment manufacturing, and advanced sensing technologies for aerospace and space exploration missions that define the future of flight.
+          </p>
+          <a href="#contact" class="service-link">
+            Explore Solutions
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="service-card fade-in-up">
+        <div class="service-hero" style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800');"></div>
+        <div class="service-content">
+          <div class="service-icon">🧠</div>
+          <h3 class="service-title">AI Intelligence</h3>
+          <p class="service-description">
+            Natural language to SQL conversion, predictive analytics, machine learning automation, and intelligent data processing solutions that democratize access to complex information systems.
+          </p>
+          <a href="#contact" class="service-link">
+            Get Started
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="technology" class="section tech-showcase">
+    <div class="fade-in-up">
+      <h2 class="section-title">Advanced Technologies</h2>
+      <p class="section-subtitle">Cutting-edge innovations powering the next generation of exploration</p>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card fade-in-up">
+        <div class="tech-icon">🔍</div>
+        <h3 class="tech-title">NLtoSQL-AI</h3>
+        <p class="tech-description">
+          Convert natural language queries into SQL using advanced language models. Democratizing database access for non-technical users.
+        </p>
+      </div>
+
+      <div class="tech-card fade-in-up">
+        <div class="tech-icon">🛰️</div>
+        <h3 class="tech-title">Quantum Sensors</h3>
+        <p class="tech-description">
+          Ultra-precise quantum sensing technologies for navigation, exploration, and measurement applications in extreme environments.
+        </p>
+      </div>
+
+      <div class="tech-card fade-in-up">
+        <div class="tech-icon">⚡</div>
+        <h3 class="tech-title">Flight Optimization</h3>
+        <p class="tech-description">
+          AI-powered flight path optimization algorithms that maximize efficiency, safety, and performance across all mission profiles.
+        </p>
+      </div>
+
+      <div class="tech-card fade-in-up">
+        <div class="tech-icon">🔬</div>
+        <h3 class="tech-title">Materials Engineering</h3>
+        <p class="tech-description">
+          Advanced materials research and precision manufacturing techniques for next-generation aerospace applications.
+        </p>
+      </div>
+
+      <div class="tech-card fade-in-up">
+        <div class="tech-icon">📊</div>
+        <h3 class="tech-title">Predictive Analytics</h3>
+        <p class="tech-description">
+          Machine learning models for predictive maintenance, performance optimization, and intelligent decision-making systems.
+        </p>
+      </div>
+
+      <div class="tech-card fade-in-up">
+        <div class="tech-icon">🌌</div>
+        <h3 class="tech-title">Space Systems</h3>
+        <p class="tech-description">
+          Integrated systems for lunar and planetary exploration missions, combining quantum computing and advanced aerospace technologies.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="fade-in-up">
+      <h2 class="section-title">Our Mission</h2>
+      <p class="section-subtitle">Pushing the boundaries of what's possible through innovation and excellence</p>
+    </div>
+    
+    <div style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.8; color: var(--text-gray);">
+      <p style="margin-bottom: 2rem;">
+        QuerySmart AI is a Connecticut-based innovation company at the forefront of aviation exploration, quantum computing, and intelligent data solutions. We bridge the gap between cutting-edge research and practical applications, empowering industries to explore new frontiers.
+      </p>
+      <p style="margin-bottom: 2rem;">
+        From quantum-powered aerospace optimization to natural language data interfaces, we're building the technologies that will define the next generation of exploration and discovery. Our mission is to accelerate human progress through breakthrough innovations that seemed impossible just years ago.
+      </p>
+      <p>
+        Founded by industry professionals with deep expertise in data science, aerospace engineering, and quantum technologies, we combine rigorous research with practical innovation to deliver solutions that matter for the future of humanity.
+      </p>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="fade-in-up">
+      <h2 class="section-title">Ready for Launch</h2>
+      <p class="section-subtitle">Join us in shaping the future of exploration and technology</p>
+    </div>
+
+    <form action="https://formspree.io/f/mldlnqvo" method="POST" class="contact-form fade-in-up">
+      <div class="form-group">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" id="name" name="name" class="form-input" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" id="email" name="email" class="form-input" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="company" class="form-label">Organization</label>
+        <input type="text" id="company" name="company" class="form-input">
+      </div>
+      
+      <div class="form-group">
+        <label for="message" class="form-label">Project Details</label>
+        <textarea id="message" name="message" class="form-textarea" required placeholder="Tell us about your vision and how we can help bring it to reality..."></textarea>
+      </div>
+      
+      <input type="hidden" name="_subject" value="New mission inquiry from QuerySmart AI">
+      <button type="submit" class="btn">
+        Send Message
+        <i class="fas fa-rocket"></i>
+      </button>
+    </form>
+
+    <div class="contact-info fade-in-up">
+      <div class="contact-item">
+        <i class="fas fa-envelope" style="color: var(--accent-blue);"></i>
+        <a href="mailto:contact@querysmartaillc.com">contact@querysmartaillc.com</a>
+      </div>
+      <div class="contact-item">
+        <i class="fab fa-github" style="color: var(--accent-blue);"></i>
+        <a href="https://github.com/Girim9912/">GitHub</a>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-map-marker-alt" style="color: var(--accent-blue);"></i>
+        <span>Connecticut, USA</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="footer-text">&copy; 2025 QuerySmart AI LLC. All rights reserved.</p>
+      <p class="footer-tagline">Pioneering Aviation Exploration, Quantum Computing & AI Innovation</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Header background change on scroll
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.style.background = 'rgba(0, 0, 0, 0.95)';
+      } else {
+        header.style.background = 'rgba(0, 0, 0, 0.8)';
+      }
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with fade-in-up class
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Counter animation for stats
+    const animateCounters = () => {
+      const counters = document.querySelectorAll('.stat-number');
+      const speed = 200; // The lower the slower
+
+      counters.forEach(counter => {
+        if (counter.textContent === '∞') return; // Skip infinity symbol
+        
+        const target = parseInt(counter.getAttribute('data-target') || counter.textContent);
+        const count = parseInt(counter.textContent);
+        const inc = target / speed;
+
+        if (count < target) {
+          counter.textContent = Math.ceil(count + inc);
+          setTimeout(() => animateCounters(), 1);
+        } else {
+          counter.textContent = target;
+        }
+      });
+    };
+
+    // Trigger counter animation when stats section is visible
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Set data targets for counters
+          const statNumbers = entry.target.querySelectorAll('.stat-number');
+          statNumbers.forEach((stat, index) => {
+            const values = ['2025', '3', '∞', '1'];
+            if (stat.textContent !== '∞') {
+              stat.setAttribute('data-target', values[index]);
+              stat.textContent = '0';
+            }
+          });
+          setTimeout(animateCounters, 500);
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const statsSection = document.querySelector('.stats');
+    if (statsSection) {
+      statsObserver.observe(statsSection);
+    }
+
+    // Form submission handling
+    const form = document.querySelector('.contact-form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Launching...';
+        submitBtn.disabled = true;
+        
+        // Re-enable after 3 seconds (fallback)
+        setTimeout(() => {
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }, 3000);
+      });
+    }
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (mobileMenuBtn && navMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+        navMenu.style.position = 'absolute';
+        navMenu.style.top = '100%';
+        navMenu.style.left = '0';
+        navMenu.style.right = '0';
+        navMenu.style.background = 'rgba(0, 0, 0, 0.95)';
+        navMenu.style.flexDirection = 'column';
+        navMenu.style.padding = '2rem';
+        navMenu.style.gap = '1rem';
+      });
+    }
+
+    // Service card hover effects
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // Tech card stagger animation
+    document.querySelectorAll('.tech-card').forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        const rate = scrolled * -0.5;
+        hero.style.transform = `translateY(${rate}px)`;
+      }
+    });
+
+    // Smooth reveal animation for service cards
+    const serviceCards = document.querySelectorAll('.service-card');
+    const serviceObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }, index * 200);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    serviceCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(50px)';
+      card.style.transition = 'all 0.6s ease';
+      serviceObserver.observe(card);
+    });
+
+    // Add loading state for external resources
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+      
+      // Add subtle entrance animations
+      const hero = document.querySelector('.hero-content');
+      if (hero) {
+        hero.style.opacity = '1';
+        hero.style.transform = 'translateY(0)';
+      }
+    });
+
+    // Performance optimization: Reduce animations on mobile
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+      document.documentElement.style.setProperty('--animation-duration', '0s');
+    }
+
+    // Add subtle floating animation to logo
+    const logoIcon = document.querySelector('.logo-icon');
+    if (logoIcon) {
+      setInterval(() => {
+        logoIcon.style.transform = `translateY(${Math.sin(Date.now() / 1000) * 2}px)`;
+      }, 16);
+    }
+
+    // Keyboard navigation support
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        document.body.classList.add('keyboard-navigation');
+      }
+    });
+
+    document.addEventListener('mousedown', () => {
+      document.body.classList.remove('keyboard-navigation');
+    });
+
+    // Add focus styles for keyboard navigation
+    const style = document.createElement('style');
+    style.textContent = `
+      .keyboard-navigation *:focus {
+        outline: 2px solid var(--accent-blue) !important;
+        outline-offset: 2px;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
