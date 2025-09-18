@@ -186,14 +186,6 @@ if (prefersReducedMotion.matches) {
   document.documentElement.style.setProperty('--animation-duration', '0s');
 }
 
-// Add subtle floating animation to logo
-const logoIcon = document.querySelector('.logo-icon');
-if (logoIcon) {
-  setInterval(() => {
-    logoIcon.style.transform = `translateY(${Math.sin(Date.now() / 1000) * 2}px)`;
-  }, 16);
-}
-
 // Keyboard navigation support
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Tab') {
@@ -214,3 +206,57 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+// Debounce function for performance optimization
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}
+
+// Optimized scroll handler
+const optimizedScroll = debounce(() => {
+  const header = document.getElementById('header');
+  const scrolled = window.pageYOffset;
+  
+  // Header background
+  if (scrolled > 100) {
+    header.style.background = 'rgba(0, 0, 0, 0.95)';
+  } else {
+    header.style.background = 'rgba(0, 0, 0, 0.8)';
+  }
+  
+  // Parallax effect
+  const hero = document.querySelector('.hero');
+  if (hero && scrolled < window.innerHeight) {
+    const rate = scrolled * -0.5;
+    hero.style.transform = `translateY(${rate}px)`;
+  }
+}, 10);
+
+window.addEventListener('scroll', optimizedScroll);
+
+// Initialize animations on page load
+document.addEventListener('DOMContentLoaded', () => {
+  // Add initial animation classes
+  const heroContent = document.querySelector('.hero-content');
+  if (heroContent) {
+    heroContent.style.opacity = '0';
+    heroContent.style.transform = 'translateY(30px)';
+    heroContent.style.transition = 'all 1s ease';
+    
+    setTimeout(() => {
+      heroContent.style.opacity = '1';
+      heroContent.style.transform = 'translateY(0)';
+    }, 300);
+  }
+});
