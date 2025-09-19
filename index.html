@@ -24,6 +24,8 @@
       --accent-blue: #0099ff;
       --text-gray: #666666;
       --border-gray: #333333;
+      --success-green: #00d084;
+      --error-red: #ff4444;
     }
 
     body {
@@ -249,6 +251,12 @@
       border: 2px solid var(--accent-blue);
     }
 
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     /* Scroll Indicator */
     .scroll-indicator {
       position: absolute;
@@ -472,7 +480,7 @@
       line-height: 1.6;
     }
 
-    /* Contact Section - SpaceX Style */
+    /* Contact Section - Enhanced */
     .contact {
       background: linear-gradient(135deg, var(--secondary-black), var(--primary-black));
       padding: 120px 0;
@@ -514,11 +522,44 @@
       outline: none;
       border-color: var(--accent-blue);
       box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1);
+      background: rgba(26, 26, 26, 0.8);
     }
 
     .form-textarea {
       min-height: 120px;
       resize: vertical;
+    }
+
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: var(--text-gray);
+      opacity: 0.8;
+    }
+
+    /* Form Status Messages */
+    .form-message {
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      display: none;
+      font-weight: 500;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-message.success {
+      background: rgba(0, 208, 132, 0.1);
+      border: 1px solid var(--success-green);
+      color: var(--success-green);
+    }
+
+    .form-message.error {
+      background: rgba(255, 68, 68, 0.1);
+      border: 1px solid var(--error-red);
+      color: var(--error-red);
+    }
+
+    .form-message i {
+      font-size: 1.2rem;
     }
 
     .contact-info {
@@ -659,6 +700,16 @@
 
     ::-webkit-scrollbar-thumb:hover {
       background: var(--accent-blue);
+    }
+
+    /* Loading Animation */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading {
+      animation: spin 1s linear infinite;
     }
   </style>
 </head>
@@ -861,7 +912,35 @@
       <p class="section-subtitle">Join us in shaping the future of exploration and technology</p>
     </div>
 
-    <form action="https://formspree.io/f/mldlnqvo" method="POST" class="contact-form fade-in-up">
+    <!-- Success Message -->
+    <div class="form-message success" id="successMessage">
+      <i class="fas fa-check-circle"></i>
+      <div>
+        <strong>Mission Control Confirmed!</strong><br>
+        Thank you for reaching out. We'll get back to you within 24 hours.
+      </div>
+    </div>
+
+    <!-- Error Message -->
+    <div class="form-message error" id="errorMessage">
+      <i class="fas fa-exclamation-triangle"></i>
+      <div>
+        <strong>Houston, We Have a Problem!</strong><br>
+        Please try again or contact us directly at contact@querysmartaillc.com
+      </div>
+    </div>
+
+    <!-- Enhanced Contact Form with Web3Forms -->
+    <form action="https://api.web3forms.com/submit" method="POST" class="contact-form fade-in-up" id="contactForm">
+      <!-- Web3Forms Configuration -->
+      <input type="hidden" name="access_key" value="1d120dc4-e32f-457a-a845-71f1edd41d6c">
+      <input type="hidden" name="subject" value="New Mission Inquiry - QuerySmart AI">
+      <input type="hidden" name="from_name" value="QuerySmart AI Website">
+      <input type="hidden" name="redirect" value="https://querysmartaillc.com#contact">
+      
+      <!-- Honeypot for spam protection -->
+      <input type="checkbox" name="botcheck" style="display: none;">
+
       <div class="form-group">
         <label for="name" class="form-label">Full Name</label>
         <input type="text" id="name" name="name" class="form-input" required>
@@ -871,10 +950,15 @@
         <label for="email" class="form-label">Email Address</label>
         <input type="email" id="email" name="email" class="form-input" required>
       </div>
+
+      <div class="form-group">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="tel" id="phone" name="phone" class="form-input" placeholder="Optional: +1 (123) 456-7890">
+      </div>
       
       <div class="form-group">
         <label for="company" class="form-label">Organization</label>
-        <input type="text" id="company" name="company" class="form-input">
+        <input type="text" id="company" name="company" class="form-input" placeholder="Your company or organization">
       </div>
       
       <div class="form-group">
@@ -882,10 +966,9 @@
         <textarea id="message" name="message" class="form-textarea" required placeholder="Tell us about your vision and how we can help bring it to reality..."></textarea>
       </div>
       
-      <input type="hidden" name="_subject" value="New mission inquiry from QuerySmart AI">
-      <button type="submit" class="btn">
-        Send Message
-        <i class="fas fa-rocket"></i>
+      <button type="submit" class="btn" id="submitBtn">
+        <span id="submitText">Send Message</span>
+        <i class="fas fa-rocket" id="submitIcon"></i>
       </button>
     </form>
 
@@ -898,6 +981,10 @@
         <i class="fas fa-map-marker-alt" style="color: var(--accent-blue);"></i>
         <span>Connecticut, USA</span>
       </div>
+      <div class="contact-item">
+        <i class="fab fa-github" style="color: var(--accent-blue);"></i>
+        <a href="https://github.com/Girim9912/" target="_blank">GitHub</a>
+      </div>
     </div>
   </section>
 
@@ -909,6 +996,87 @@
   </footer>
 
   <script>
+    // Enhanced Contact Form Handling
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitText = document.getElementById('submitText');
+    const submitIcon = document.getElementById('submitIcon');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Form submission handling
+    if (contactForm) {
+      contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Hide previous messages
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        submitText.textContent = 'Launching...';
+        submitIcon.className = 'fas fa-spinner loading';
+        
+        try {
+          const formData = new FormData(contactForm);
+          
+          // Add timestamp and source
+          formData.append('timestamp', new Date().toLocaleString());
+          formData.append('source', 'QuerySmart AI Website');
+          
+          const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            successMessage.style.display = 'flex';
+            contactForm.reset();
+            
+            // Scroll to success message
+            successMessage.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+            
+            // Track success (if you have analytics)
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'form_submit', {
+                event_category: 'Contact',
+                event_label: 'Contact Form Success'
+              });
+            }
+          } else {
+            throw new Error(data.message || 'Form submission failed');
+          }
+        } catch (error) {
+          console.error('Form submission error:', error);
+          errorMessage.style.display = 'flex';
+          
+          // Scroll to error message
+          errorMessage.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+          
+          // Track error (if you have analytics)
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'form_error', {
+              event_category: 'Contact',
+              event_label: 'Contact Form Error'
+            });
+          }
+        } finally {
+          submitBtn.disabled = false;
+          submitText.textContent = 'Send Message';
+          submitIcon.className = 'fas fa-rocket';
+        }
+      });
+    }
+
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -995,24 +1163,6 @@
     const statsSection = document.querySelector('.stats');
     if (statsSection) {
       statsObserver.observe(statsSection);
-    }
-
-    // Form submission handling
-    const form = document.querySelector('.contact-form');
-    if (form) {
-      form.addEventListener('submit', function(e) {
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Launching...';
-        submitBtn.disabled = true;
-        
-        // Re-enable after 3 seconds (fallback)
-        setTimeout(() => {
-          submitBtn.innerHTML = originalText;
-          submitBtn.disabled = false;
-        }, 3000);
-      });
     }
 
     // Mobile menu toggle
@@ -1125,6 +1275,49 @@
       }
     `;
     document.head.appendChild(style);
+
+    // Form input enhancements
+    document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 8px 25px rgba(0, 153, 255, 0.15)';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = 'none';
+      });
+    });
+
+    // Auto-hide messages after 10 seconds
+    function autoHideMessages() {
+      setTimeout(() => {
+        const messages = document.querySelectorAll('.form-message');
+        messages.forEach(message => {
+          if (message.style.display === 'flex') {
+            message.style.opacity = '0.5';
+            setTimeout(() => {
+              message.style.display = 'none';
+              message.style.opacity = '1';
+            }, 2000);
+          }
+        });
+      }, 10000);
+    }
+
+    // Call auto-hide when messages are shown
+    const originalDisplay = successMessage.style.display;
+    Object.defineProperty(successMessage.style, 'display', {
+      set(value) {
+        originalDisplay = value;
+        if (value === 'flex') {
+          autoHideMessages();
+        }
+      },
+      get() {
+        return originalDisplay;
+      }
+    });
   </script>
 </body>
 </html>
