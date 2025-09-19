@@ -702,6 +702,47 @@
       background: var(--accent-blue);
     }
 
+    /* Additional Styles for Career Form */
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .file-upload-wrapper:hover {
+      border-color: var(--accent-blue) !important;
+      background: rgba(0, 153, 255, 0.05) !important;
+    }
+
+    .file-upload-wrapper.dragover {
+      border-color: var(--accent-blue) !important;
+      background: rgba(0, 153, 255, 0.1) !important;
+      transform: scale(1.02);
+    }
+
+    .careers-section .form-group input:focus,
+    .careers-section .form-group select:focus,
+    .careers-section .form-group textarea:focus {
+      outline: none !important;
+      border-color: var(--accent-blue) !important;
+      box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1) !important;
+      background: rgba(26, 26, 26, 0.8) !important;
+    }
+
+    .careers-section .btn:hover::before {
+      left: 100% !important;
+    }
+
+    .careers-section .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
     /* Loading Animation */
     @keyframes spin {
       0% { transform: rotate(0deg); }
@@ -1119,7 +1160,7 @@
     <!-- Enhanced Contact Form with Web3Forms -->
     <form action="https://api.web3forms.com/submit" method="POST" class="contact-form fade-in-up" id="contactForm">
       <!-- Web3Forms Configuration -->
-      <input type="hidden" name="access_key" value="1d120dc4-e32f-457a-a845-71f1edd41d6c">
+      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
       <input type="hidden" name="subject" value="New Mission Inquiry - QuerySmart AI">
       <input type="hidden" name="from_name" value="QuerySmart AI Website">
       <input type="hidden" name="redirect" value="https://querysmartaillc.com#contact">
@@ -1182,13 +1223,15 @@
   </footer>
 
   <script>
-    // Career Form Handling
+    // Career Form Handling - Fixed Version
     const careerForm = document.getElementById('careerForm');
     const careerSubmitBtn = document.getElementById('careerSubmitBtn');
     const careerSubmitText = document.getElementById('careerSubmitText');
     const careerSubmitIcon = document.getElementById('careerSubmitIcon');
     const careerSuccessMessage = document.getElementById('careerSuccessMessage');
     const careerErrorMessage = document.getElementById('careerErrorMessage');
+    
+    // File upload elements
     const fileUpload = document.getElementById('resume-upload');
     const fileInfo = document.getElementById('file-info');
     const fileName = document.getElementById('file-name');
@@ -1201,45 +1244,69 @@
         const file = e.target.files[0];
         if (file) {
           if (file.size > 5 * 1024 * 1024) { // 5MB limit
-            alert('File size must be less than 5MB');
+            alert('File size must be less than 5MB. Please choose a smaller file.');
             fileUpload.value = '';
             return;
           }
-          fileName.textContent = file.name;
-          fileInfo.style.display = 'block';
-          fileWrapper.querySelector('.upload-content > p').style.display = 'none';
+          
+          // Valid file types
+          const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+          if (!validTypes.includes(file.type)) {
+            alert('Please upload only PDF, DOC, or DOCX files.');
+            fileUpload.value = '';
+            return;
+          }
+          
+          // Show file info
+          if (fileName) fileName.textContent = file.name;
+          if (fileInfo) fileInfo.style.display = 'block';
+          
+          // Hide upload text
+          const uploadText = document.querySelector('.upload-text');
+          const uploadSubtext = document.querySelector('.upload-subtext');
+          if (uploadText) uploadText.style.display = 'none';
+          if (uploadSubtext) uploadSubtext.style.display = 'none';
         }
       });
     }
 
-    // Remove file
+    // Remove file functionality
     if (removeFile) {
       removeFile.addEventListener('click', function() {
-        fileUpload.value = '';
-        fileInfo.style.display = 'none';
-        fileWrapper.querySelector('.upload-content > p').style.display = 'block';
+        if (fileUpload) fileUpload.value = '';
+        if (fileInfo) fileInfo.style.display = 'none';
+        
+        // Show upload text again
+        const uploadText = document.querySelector('.upload-text');
+        const uploadSubtext = document.querySelector('.upload-subtext');
+        if (uploadText) uploadText.style.display = 'block';
+        if (uploadSubtext) uploadSubtext.style.display = 'block';
       });
     }
 
-    // Drag and drop
+    // Drag and drop functionality
     if (fileWrapper) {
       fileWrapper.addEventListener('dragover', function(e) {
         e.preventDefault();
+        e.stopPropagation();
         this.classList.add('dragover');
       });
 
       fileWrapper.addEventListener('dragleave', function(e) {
         e.preventDefault();
+        e.stopPropagation();
         this.classList.remove('dragover');
       });
 
       fileWrapper.addEventListener('drop', function(e) {
         e.preventDefault();
+        e.stopPropagation();
         this.classList.remove('dragover');
+        
         const files = e.dataTransfer.files;
-        if (files.length > 0) {
+        if (files.length > 0 && fileUpload) {
           fileUpload.files = files;
-          fileUpload.dispatchEvent(new Event('change'));
+          fileUpload.dispatchEvent(new Event('change', { bubbles: true }));
         }
       });
     }
@@ -1249,57 +1316,97 @@
       careerForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        console.log('Career form submitted'); // Debug log
+        
         // Hide previous messages
         if (careerSuccessMessage) careerSuccessMessage.style.display = 'none';
         if (careerErrorMessage) careerErrorMessage.style.display = 'none';
         
+        // Validate required fields
+        const firstName = careerForm.querySelector('[name="first_name"]').value.trim();
+        const lastName = careerForm.querySelector('[name="last_name"]').value.trim();
+        const email = careerForm.querySelector('[name="email"]').value.trim();
+        const phone = careerForm.querySelector('[name="phone"]').value.trim();
+        const resume = careerForm.querySelector('[name="attachment"]').files[0];
+        
+        if (!firstName || !lastName || !email || !phone || !resume) {
+          if (careerErrorMessage) {
+            careerErrorMessage.querySelector('div div').innerHTML = '<strong>Missing Information!</strong><br>Please fill in all required fields and upload your resume.';
+            careerErrorMessage.style.display = 'flex';
+          }
+          return;
+        }
+        
         // Show loading state
-        careerSubmitBtn.disabled = true;
-        careerSubmitText.textContent = 'Uploading...';
-        careerSubmitIcon.className = 'fas fa-spinner loading';
+        if (careerSubmitBtn) {
+          careerSubmitBtn.disabled = true;
+          if (careerSubmitText) careerSubmitText.textContent = 'Uploading...';
+          if (careerSubmitIcon) careerSubmitIcon.className = 'fas fa-spinner loading';
+        }
         
         try {
           const formData = new FormData(careerForm);
+          
+          // Add additional data
           formData.append('timestamp', new Date().toLocaleString());
-          formData.append('source', 'QuerySmart AI Careers');
+          formData.append('source', 'QuerySmart AI Careers Page');
+          formData.append('form_type', 'Career Application');
+          
+          console.log('Sending form data to Web3Forms...'); // Debug log
           
           const response = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             body: formData
           });
 
+          console.log('Response status:', response.status); // Debug log
+          
           const data = await response.json();
+          console.log('Response data:', data); // Debug log
 
           if (data.success) {
-            careerSuccessMessage.style.display = 'flex';
+            if (careerSuccessMessage) {
+              careerSuccessMessage.style.display = 'flex';
+              careerSuccessMessage.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+              });
+            }
+            
+            // Reset form
             careerForm.reset();
             if (fileInfo) fileInfo.style.display = 'none';
-            if (fileWrapper) fileWrapper.querySelector('.upload-content > p').style.display = 'block';
+            const uploadText = document.querySelector('.upload-text');
+            const uploadSubtext = document.querySelector('.upload-subtext');
+            if (uploadText) uploadText.style.display = 'block';
+            if (uploadSubtext) uploadSubtext.style.display = 'block';
             
-            // Scroll to success message
-            careerSuccessMessage.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'center' 
-            });
           } else {
             throw new Error(data.message || 'Application submission failed');
           }
+          
         } catch (error) {
-          console.error('Career form error:', error);
+          console.error('Career form submission error:', error);
+          
           if (careerErrorMessage) {
             careerErrorMessage.style.display = 'flex';
-            // Scroll to error message
             careerErrorMessage.scrollIntoView({ 
               behavior: 'smooth', 
               block: 'center' 
             });
           }
+          
         } finally {
-          careerSubmitBtn.disabled = false;
-          careerSubmitText.textContent = 'Launch Application';
-          careerSubmitIcon.className = 'fas fa-rocket';
+          // Reset button state
+          if (careerSubmitBtn) {
+            careerSubmitBtn.disabled = false;
+            if (careerSubmitText) careerSubmitText.textContent = 'Launch Application';
+            if (careerSubmitIcon) careerSubmitIcon.className = 'fas fa-rocket';
+          }
         }
       });
+    } else {
+      console.error('Career form not found!'); // Debug log
     }
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
