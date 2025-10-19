@@ -834,13 +834,12 @@
   <section id="careers" class="careers-section" style="padding: 120px 0; background: linear-gradient(135deg, var(--secondary-black), var(--primary-black)); position: relative; z-index: 2;">
     <div class="container" style="max-width: 800px; margin: 0 auto; padding: 0 2rem;">
       
-      <!-- Header -->
       <div class="fade-in-up" style="text-align: center; margin-bottom: 3rem;">
         <h2 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-bottom: 1rem; letter-spacing: -1px; color: var(--accent-white);">
           Join Our Mission
         </h2>
         <p style="font-size: 1.2rem; color: var(--text-gray); font-weight: 300; max-width: 500px; margin: 0 auto;">
-          Ready to pioneer the future? Upload your resume and become part of our quantum leap forward.
+          Ready to pioneer the future? Tell us about yourself and we'll guide you through our application process.
         </p>
       </div>
 
@@ -848,16 +847,16 @@
       <div class="form-message success" id="careerSuccessMessage" style="padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: none; font-weight: 500; align-items: center; gap: 0.5rem; background: rgba(0, 208, 132, 0.1); border: 1px solid var(--success-green); color: var(--success-green);">
         <i class="fas fa-rocket" style="font-size: 1.2rem;"></i>
         <div>
-          <strong>Application Launched Successfully!</strong><br>
-          Your resume has been received. We'll review it and get back to you soon.
+          <strong>Interest Registered Successfully!</strong><br>
+          Thank you! We'll send you application instructions within 24 hours.
         </div>
       </div>
 
       <div class="form-message error" id="careerErrorMessage" style="padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; display: none; font-weight: 500; align-items: center; gap: 0.5rem; background: rgba(255, 68, 68, 0.1); border: 1px solid var(--error-red); color: var(--error-red);">
         <i class="fas fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
         <div>
-          <strong>Upload Failed!</strong><br>
-          Please check your file and try again, or email us directly.
+          <strong>Submission Failed!</strong><br>
+          Please try again or email us directly at careers@querysmartaillc.com
         </div>
       </div>
 
@@ -867,15 +866,14 @@
         <!-- Animated Background -->
         <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent-blue), #00d4ff, var(--accent-blue)); background-size: 200% 100%; animation: gradient-shift 3s ease-in-out infinite;"></div>
         
-        <form action="https://api.web3forms.com/submit" method="POST" id="careerForm" enctype="multipart/form-data">
+        <form name="career-application" method="POST" data-netlify="true" enctype="multipart/form-data" id="careerForm">
           
-          <!-- Web3Forms Configuration -->
-          <input type="hidden" name="access_key" value="1d120dc4-e32f-457a-a845-71f1edd41d6c">
+          <!-- Netlify Forms Configuration -->
+          <input type="hidden" name="form-name" value="career-application">
           <input type="hidden" name="subject" value="New Career Application - QuerySmart AI">
-          <input type="hidden" name="from_name" value="QuerySmart AI Careers">
           
           <!-- Honeypot -->
-          <input type="checkbox" name="botcheck" style="display: none;">
+          <input type="checkbox" name="bot-field" style="display: none;">
           
           <!-- Name Fields -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
@@ -993,7 +991,7 @@
       <!-- Contact Info -->
       <div class="fade-in-up" style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-gray);">
         <p style="color: var(--text-gray); margin-bottom: 1rem;">
-          Have questions about opportunities?
+          Questions about opportunities?
         </p>
         <a href="mailto:careers@querysmartaillc.com" style="color: var(--accent-blue); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
           <i class="fas fa-envelope"></i>
@@ -1160,7 +1158,7 @@
     <!-- Enhanced Contact Form with Web3Forms -->
     <form action="https://api.web3forms.com/submit" method="POST" class="contact-form fade-in-up" id="contactForm">
       <!-- Web3Forms Configuration -->
-      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+      <input type="hidden" name="access_key" value="1d120dc4-e32f-457a-a845-71f1edd41d6c">
       <input type="hidden" name="subject" value="New Mission Inquiry - QuerySmart AI">
       <input type="hidden" name="from_name" value="QuerySmart AI Website">
       <input type="hidden" name="redirect" value="https://querysmartaillc.com#contact">

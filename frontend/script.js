@@ -245,18 +245,79 @@ const optimizedScroll = debounce(() => {
 
 window.addEventListener('scroll', optimizedScroll);
 
-// Initialize animations on page load
+// script.js (append or replace with this)
 document.addEventListener('DOMContentLoaded', () => {
-  // Add initial animation classes
-  const heroContent = document.querySelector('.hero-content');
-  if (heroContent) {
-    heroContent.style.opacity = '0';
-    heroContent.style.transform = 'translateY(30px)';
-    heroContent.style.transition = 'all 1s ease';
-    
-    setTimeout(() => {
-      heroContent.style.opacity = '1';
-      heroContent.style.transform = 'translateY(0)';
-    }, 300);
+  // Contact Form Submission
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(contactForm);
+      try {
+        const response = await fetch('http://localhost:3000/contact', {
+          method: 'POST',
+          body: formData,
+        });
+        const result = await response.json();
+        showMessage(
+          response.ok
+            ? 'Mission Control Confirmed! We’ll get back to you within 24 hours.'
+            : `Houston, We Have a Problem! ${result.error || 'Please try again.'}`,
+          response.ok ? 'success' : 'error',
+          'contact-message'
+        );
+        if (response.ok) contactForm.reset();
+      } catch (error) {
+        console.error('Error:', error);
+        showMessage(
+          'Houston, We Have a Problem! Please try again or email contact@querysmartaillc.com',
+          'error',
+          'contact-message'
+        );
+      }
+    });
   }
-});
+
+ // Append to script.js
+const careersForm = document.getElementById('careersForm');
+if (careersForm) {
+  careersForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(careersForm);
+    try {
+      const res = await fetch('http://localhost:8000/api/apply', {  // Update to your backend URL
+        method: 'POST',
+        body: formData
+      });
+      if (res.ok) {
+        careersForm.reset();
+        document.getElementById('careers-message').innerText = 'Mission Control Confirmed! Application received.';
+        document.getElementById('careers-message').classList.add('success');
+      } else {
+        throw new Error(await res.text());
+      }
+    } catch (err) {
+      document.getElementById('careers-message').innerText = `Houston, We Have a Problem! ${err.message}`;
+      document.getElementById('careers-message').classList.add('error');
+    }
+  });
+}
+
+// Drag-and-drop
+const dropZone = document.getElementById('dropZone');
+const resumeInput = document.getElementById('resume');
+if (dropZone && resumeInput) {
+  dropZone.addEventListener('click', () => resumeInput.click());
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('highlight');
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('highlight'));
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('highlight');
+    resumeInput.files = e.dataTransfer.files;
+    dropZone.querySelector('p').textContent = resumeInput.files[0]?.name || 'Drag & drop or click to browse';
+  });
+}
+}); 

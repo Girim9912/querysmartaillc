@@ -610,3 +610,17 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-blue);
 }
+/* styles.css (append) */
+.drop-zone {
+  border: 2px dashed var(--text-gray);
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  background: var(--background-light);
+  border-radius: 4px;
+  margin: 10px 0;
+}
+.drop-zone { border: 2px dashed #ccc; padding: 20px; text-align: center; cursor: pointer; }
+.drop-zone.highlight { border-color: var(--accent-blue); background: rgba(0,123,255,0.1); }
+#careers-message.success { color: green; }
+#careers-message.error { color: red; }
