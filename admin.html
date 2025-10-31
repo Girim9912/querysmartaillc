@@ -3,64 +3,629 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - QuerySmart AI LLC</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Admin Dashboard - QuerySmart AI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    .admin-container { max-width: 900px; margin: 3rem auto; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    h1 { text-align: center; }
-    button { display: block; margin: 1rem auto; padding: 10px 20px; background:#0073e6; color:white; border:none; border-radius:6px; cursor:pointer; }
-    button:hover { background:#005bb5; }
-    .application { border:1px solid #ddd; padding:1rem; margin:1rem 0; border-radius:8px; }
-    .application h3 { margin:0 0 .5rem; }
+    :root {
+      --primary-black: #000000;
+      --secondary-black: #1a1a1a;
+      --accent-white: #ffffff;
+      --accent-blue: #0099ff;
+      --text-gray: #666666;
+      --border-gray: #333333;
+      --success-green: #00d084;
+      --error-red: #ff4444;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--primary-black);
+      color: var(--accent-white);
+      line-height: 1.6;
+    }
+
+    .header {
+      background: var(--secondary-black);
+      border-bottom: 2px solid var(--accent-blue);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+    }
+
+    .header p {
+      color: var(--text-gray);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, var(--secondary-black), #2a2a2a);
+      border: 1px solid var(--border-gray);
+      border-radius: 12px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), #00d4ff);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
+
+    .actions {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: var(--accent-white);
+    }
+
+    .btn-success {
+      background: var(--success-green);
+      color: var(--accent-white);
+    }
+
+    .btn-danger {
+      background: var(--error-red);
+      color: var(--accent-white);
+    }
+
+    .btn-secondary {
+      background: var(--border-gray);
+      color: var(--accent-white);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 153, 255, 0.3);
+    }
+
+    .search-box {
+      padding: 0 2rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 15px 20px;
+      background: var(--secondary-black);
+      border: 2px solid var(--border-gray);
+      border-radius: 8px;
+      color: var(--accent-white);
+      font-size: 1rem;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+    }
+
+    .applications-container {
+      padding: 0 2rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .application-card {
+      background: var(--secondary-black);
+      border: 1px solid var(--border-gray);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .application-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 153, 255, 0.2);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .card-header h3 {
+      color: var(--accent-white);
+      font-size: 1.5rem;
+    }
+
+    .badge {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: var(--accent-blue);
+      color: var(--accent-white);
+    }
+
+    .card-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-item {
+      background: var(--primary-black);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-gray);
+    }
+
+    .detail-item strong {
+      display: block;
+      color: var(--accent-blue);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-small {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-gray);
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-content {
+      background: var(--secondary-black);
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border: 1px solid var(--border-gray);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-gray);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close-btn:hover {
+      color: var(--accent-white);
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="careers.html">Careers</a></li>
-        <li><a href="admin.html" class="active">Admin</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="header">
+    <h1>🚀 QuerySmart AI Admin</h1>
+    <p>Career Applications Dashboard</p>
+  </div>
 
-  <main class="admin-container">
-    <h1>Applications Dashboard</h1>
-    <button onclick="loadApps()">Load Applications</button>
-    <div id="appList"></div>
-  </main>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-number" id="totalCount">0</span>
+      <span class="stat-label">Total Applications</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number" id="monthCount">0</span>
+      <span class="stat-label">This Month</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number" id="todayCount">0</span>
+      <span class="stat-label">Today</span>
+    </div>
+  </div>
 
-  <footer>
-    <p>&copy; 2025 QuerySmart AI LLC. All rights reserved.</p>
-  </footer>
+  <div class="actions">
+    <button class="btn btn-success" onclick="exportAllToJSON()">
+      <i class="fas fa-download"></i>
+      Export All (JSON)
+    </button>
+    <button class="btn btn-primary" onclick="exportAllToCSV()">
+      <i class="fas fa-file-csv"></i>
+      Export All (CSV)
+    </button>
+    <button class="btn btn-danger" onclick="clearAllApplications()">
+      <i class="fas fa-trash"></i>
+      Clear All Data
+    </button>
+    <a href="index.html" class="btn btn-secondary">
+      <i class="fas fa-arrow-left"></i>
+      Back to Website
+    </a>
+  </div>
 
-<script>
-const backend = "https://your-backend.onrender.com"; // replace with your Render backend
-const token = "QsmrtAI_2025_Admin!@#987";
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 Search by name, email, or position..." onkeyup="filterApplications()">
+  </div>
 
-async function loadApps() {
-  const res = await fetch(backend + "/api/applications", {
-    headers: { "x-admin-token": token }
-  });
-  const apps = await res.json();
+  <div class="applications-container">
+    <div id="applicationsList"></div>
+  </div>
 
-  const list = document.getElementById("appList");
-  list.innerHTML = "";
+  <div id="resumeModal" class="modal" onclick="if(event.target===this) closeModal()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Application Details</h2>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
 
-  apps.forEach(app => {
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <h3>${app.name} (${app.email}, ${app.phone})</h3>
-      <p><b>Position:</b> ${app.position}</p>
-      <p><b>Cover Letter:</b> ${app.cover}</p>
-      <a href="${backend}${app.resume_url}" target="_blank">📄 Resume</a>
-      <hr>
-    `;
-    list.appendChild(div);
-  });
-}
+  <script>
+    let allApplications = [];
 
-</script>
+    function loadApplications() {
+      allApplications = JSON.parse(localStorage.getItem('careerApplications') || '[]');
+      updateStats();
+      displayApplications(allApplications);
+    }
+
+    function updateStats() {
+      const today = new Date().toDateString();
+      const currentMonth = new Date().getMonth();
+      const currentYear = new Date().getFullYear();
+
+      const todayCount = allApplications.filter(app =>
+        new Date(app.submittedAt).toDateString() === today
+      ).length;
+
+      const monthCount = allApplications.filter(app => {
+        const date = new Date(app.submittedAt);
+        return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+      }).length;
+
+      document.getElementById('totalCount').textContent = allApplications.length;
+      document.getElementById('monthCount').textContent = monthCount;
+      document.getElementById('todayCount').textContent = todayCount;
+    }
+
+    function displayApplications(applications) {
+      const container = document.getElementById('applicationsList');
+
+      if (applications.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <h3>No Applications Yet</h3>
+            <p>Career applications will appear here once submitted</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = applications.map(app => `
+        <div class="application-card">
+          <div class="card-header">
+            <h3>${app.fullName || `${app.firstName} ${app.lastName}`}</h3>
+            <span class="badge">${app.position || 'Position Not Specified'}</span>
+          </div>
+
+          <div class="card-details">
+            <div class="detail-item">
+              <strong>Email</strong>
+              <span>${app.email}</span>
+            </div>
+            <div class="detail-item">
+              <strong>Phone</strong>
+              <span>${app.phone}</span>
+            </div>
+            <div class="detail-item">
+              <strong>Submitted</strong>
+              <span>${new Date(app.submittedAt).toLocaleString()}</span>
+            </div>
+            <div class="detail-item">
+              <strong>Application ID</strong>
+              <span>${app.id}</span>
+            </div>
+          </div>
+
+          ${app.coverLetter ? `
+            <div class="detail-item" style="margin-bottom: 1.5rem;">
+              <strong>Cover Letter</strong>
+              <p style="white-space: pre-wrap; line-height: 1.6; color: var(--text-gray); margin-top: 0.5rem;">${app.coverLetter.substring(0, 200)}${app.coverLetter.length > 200 ? '...' : ''}</p>
+            </div>
+          ` : ''}
+
+          <div class="card-actions">
+            <button class="btn btn-primary btn-small" onclick="downloadResume(${app.id})">
+              <i class="fas fa-file-pdf"></i>
+              Download Resume
+            </button>
+            <button class="btn btn-secondary btn-small" onclick="viewDetails(${app.id})">
+              <i class="fas fa-eye"></i>
+              View Full Details
+            </button>
+            <button class="btn btn-success btn-small" onclick="downloadApplication(${app.id})">
+              <i class="fas fa-download"></i>
+              Download JSON
+            </button>
+            <button class="btn btn-danger btn-small" onclick="deleteApplication(${app.id})">
+              <i class="fas fa-trash"></i>
+              Delete
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterApplications() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allApplications.filter(app =>
+        (app.fullName || `${app.firstName} ${app.lastName}`).toLowerCase().includes(searchTerm) ||
+        app.email.toLowerCase().includes(searchTerm) ||
+        (app.position || '').toLowerCase().includes(searchTerm)
+      );
+      displayApplications(filtered);
+    }
+
+    function downloadResume(id) {
+      const app = allApplications.find(a => a.id === id);
+      if (!app || !app.resume) {
+        alert('Resume not found');
+        return;
+      }
+
+      const link = document.createElement('a');
+      link.href = app.resume.data;
+      link.download = app.resume.name;
+      link.click();
+    }
+
+    function viewDetails(id) {
+      const app = allApplications.find(a => a.id === id);
+      if (!app) return;
+
+      const modal = document.getElementById('resumeModal');
+      const modalBody = document.getElementById('modalBody');
+
+      modalBody.innerHTML = `
+        <div style="color: var(--accent-white);">
+          <h3 style="margin-bottom: 1rem;">${app.fullName || `${app.firstName} ${app.lastName}`}</h3>
+          
+          <div style="margin-bottom: 1.5rem;">
+            <strong style="color: var(--accent-blue);">Email:</strong><br>
+            <a href="mailto:${app.email}" style="color: var(--accent-white);">${app.email}</a>
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <strong style="color: var(--accent-blue);">Phone:</strong><br>
+            ${app.phone}
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <strong style="color: var(--accent-blue);">Position:</strong><br>
+            ${app.position || 'Not specified'}
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <strong style="color: var(--accent-blue);">Application ID:</strong><br>
+            ${app.id}
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <strong style="color: var(--accent-blue);">Submitted:</strong><br>
+            ${new Date(app.submittedAt).toLocaleString()}
+          </div>
+
+          ${app.coverLetter ? `
+            <div style="margin-bottom: 1.5rem;">
+              <strong style="color: var(--accent-blue);">Why QuerySmart AI:</strong><br>
+              <p style="white-space: pre-wrap; line-height: 1.6; color: var(--text-gray); margin-top: 0.5rem;">${app.coverLetter}</p>
+            </div>
+          ` : ''}
+
+          <div style="margin-bottom: 1.5rem;">
+            <strong style="color: var(--accent-blue);">Resume:</strong><br>
+            ${app.resume ? app.resume.name : 'Not available'} (${app.resume ? (app.resume.size / 1024).toFixed(2) + ' KB' : 'N/A'})
+          </div>
+        </div>
+      `;
+
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('resumeModal').style.display = 'none';
+    }
+
+    function downloadApplication(id) {
+      const app = allApplications.find(a => a.id === id);
+      if (!app) return;
+
+      const filename = `application_${app.id}_${(app.fullName || `${app.firstName}_${app.lastName}`).replace(/\s+/g, '_')}.json`;
+      const jsonStr = JSON.stringify(app, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function deleteApplication(id) {
+      if (!confirm('Are you sure you want to delete this application?')) return;
+
+      allApplications = allApplications.filter(app => app.id !== id);
+      localStorage.setItem('careerApplications', JSON.stringify(allApplications));
+      loadApplications();
+    }
+
+    function exportAllToJSON() {
+      if (allApplications.length === 0) {
+        alert('No applications to export');
+        return;
+      }
+
+      const filename = `querysmart_applications_${Date.now()}.json`;
+      const jsonStr = JSON.stringify(allApplications, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function exportAllToCSV() {
+      if (allApplications.length === 0) {
+        alert('No applications to export');
+        return;
+      }
+
+      const headers = ['ID', 'First Name', 'Last Name', 'Email', 'Phone', 'Position', 'Submitted Date'];
+      const rows = allApplications.map(app => [
+        app.id,
+        app.firstName || '',
+        app.lastName || '',
+        app.email,
+        app.phone,
+        app.position || '',
+        new Date(app.submittedAt).toLocaleString()
+      ]);
+
+      let csv = headers.join(',') + '\n';
+      rows.forEach(row => {
+        csv += row.map(field => `"${field}"`).join(',') + '\n';
+      });
+
+      const filename = `querysmart_applications_${Date.now()}.csv`;
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearAllApplications() {
+      if (!confirm('⚠️ WARNING: This will permanently delete ALL applications. This cannot be undone!\n\nAre you absolutely sure?')) return;
+
+      if (!confirm('Last chance! Click OK to permanently delete all ' + allApplications.length + ' applications.')) return;
+
+      localStorage.removeItem('careerApplications');
+      allApplications = [];
+      loadApplications();
+      alert('All applications have been deleted.');
+    }
+
+    // Load applications when page loads
+    loadApplications();
+
+    // Auto-refresh every 30 seconds
+    setInterval(loadApplications, 30000);
+  </script>
 </body>
 </html>

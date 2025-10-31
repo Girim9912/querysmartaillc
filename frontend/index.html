@@ -200,8 +200,7 @@
       </p>
     </div>
   </section>
-
-  <!-- Replace the #contact section in index.html -->
+<!-- Replace your #contact section with this -->
 <section id="contact" class="contact">
   <div class="fade-in-up">
     <h2 class="section-title">Ready for Launch</h2>
@@ -209,68 +208,126 @@
   </div>
 
   <!-- General Contact Form -->
-  <h3 class="section-subtitle fade-in-up">Contact Us</h3>
-  <form id="contactForm" class="contact-form fade-in-up">
-    <div class="form-group">
-      <label for="name" class="form-label">Full Name</label>
-      <input type="text" id="name" name="name" class="form-input" required>
-    </div>
-    <div class="form-group">
-      <label for="email" class="form-label">Email Address</label>
-      <input type="email" id="email" name="email" class="form-input" required>
-    </div>
-    <div class="form-group">
-      <label for="company" class="form-label">Organization</label>
-      <input type="text" id="company" name="company" class="form-input">
-    </div>
-    <div class="form-group">
-      <label for="message" class="form-label">Project Details</label>
-      <textarea id="message" name="message" class="form-textarea" required placeholder="Tell us about your vision..."></textarea>
-    </div>
-    <button type="submit" class="btn">
-      Send Message
-      <i class="fas fa-rocket"></i>
-    </button>
-    <div id="contact-message" class="form-message"></div>
-  </form>
-
-  <!-- Careers Form with Resume Upload -->
-  <h3 class="section-subtitle fade-in-up">Join Our Mission</h3>
-  <form id="careersForm" class="contact-form fade-in-up" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="career_name" class="form-label">Full Name</label>
-      <input type="text" id="career_name" name="name" class="form-input" required>
-    </div>
-    <div class="form-group">
-      <label for="career_email" class="form-label">Email Address</label>
-      <input type="email" id="career_email" name="email" class="form-input" required>
-    </div>
-    <div class="form-group">
-      <label for="career_phone" class="form-label">Phone Number</label>
-      <input type="tel" id="career_phone" name="phone" class="form-input" required>
-    </div>
-    <div class="form-group">
-      <label for="career_position" class="form-label">Position</label>
-      <input type="text" id="career_position" name="position" class="form-input" required placeholder="e.g., Quantum Engineer">
-    </div>
-    <div class="form-group">
-      <label for="career_cover" class="form-label">Cover Letter</label>
-      <textarea id="career_cover" name="cover" class="form-textarea" required placeholder="Why you want to join QuerySmart AI..."></textarea>
-    </div>
-    <div class="form-group">
-      <label for="career_resume" class="form-label">Upload Resume</label>
-      <div class="drop-zone" id="dropZone">
-        <p>Drag & drop your resume here or click to browse</p>
-        <input type="file" id="career_resume" name="resume" class="form-input" accept=".pdf,.docx" hidden required>
+  <div class="contact-section-wrapper fade-in-up">
+    <h3 class="contact-section-title">Contact Us</h3>
+    <form id="contactForm" class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="contact-name" class="form-label">Full Name</label>
+          <input type="text" id="contact-name" name="name" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label for="contact-email" class="form-label">Email Address</label>
+          <input type="email" id="contact-email" name="email" class="form-input" required>
+        </div>
       </div>
-    </div>
-    <button type="submit" class="btn">
-      Apply Now
-      <i class="fas fa-rocket"></i>
-    </button>
-    <div id="careers-message" class="form-message"></div>
-  </form>
+      <div class="form-group">
+        <label for="company" class="form-label">Organization</label>
+        <input type="text" id="company" name="company" class="form-input">
+      </div>
+      <div class="form-group">
+        <label for="contact-message" class="form-label">Project Details</label>
+        <textarea id="contact-message" name="message" class="form-textarea" required placeholder="Tell us about your vision..."></textarea>
+      </div>
+      <button type="submit" class="btn">
+        Send Message
+        <i class="fas fa-rocket"></i>
+      </button>
+      <div id="contact-message-status" class="form-message"></div>
+    </form>
+  </div>
 
+  <!-- Careers/Recruitment Form -->
+  <div class="contact-section-wrapper fade-in-up">
+    <h3 class="contact-section-title">Join Our Mission</h3>
+    <p class="section-subtitle" style="margin-bottom: 2rem;">Apply to be part of our innovative team</p>
+    
+    <div id="career-success-message" class="form-message success-message"></div>
+    <div id="career-error-message" class="form-message error-message"></div>
+    
+    <form id="careerForm" class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fullName" class="form-label">Full Name <span class="required">*</span></label>
+          <input type="text" id="fullName" name="fullName" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label for="career-email" class="form-label">Email Address <span class="required">*</span></label>
+          <input type="email" id="career-email" name="email" class="form-input" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone" class="form-label">Phone Number <span class="required">*</span></label>
+          <input type="tel" id="phone" name="phone" class="form-input" required placeholder="+1 (555) 123-4567">
+        </div>
+        <div class="form-group">
+          <label for="position" class="form-label">Position Applied For <span class="required">*</span></label>
+          <select id="position" name="position" class="form-input" required>
+            <option value="">-- Select Position --</option>
+            <option value="Quantum Computing Researcher">Quantum Computing Researcher</option>
+            <option value="Aerospace Engineer">Aerospace Engineer</option>
+            <option value="AI/ML Engineer">AI/ML Engineer</option>
+            <option value="Data Scientist">Data Scientist</option>
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Product Manager">Product Manager</option>
+            <option value="DevOps Engineer">DevOps Engineer</option>
+            <option value="UI/UX Designer">UI/UX Designer</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="linkedin" class="form-label">LinkedIn Profile</label>
+          <input type="url" id="linkedin" name="linkedin" class="form-input" placeholder="https://linkedin.com/in/yourprofile">
+        </div>
+        <div class="form-group">
+          <label for="portfolio" class="form-label">Portfolio/Website</label>
+          <input type="url" id="portfolio" name="portfolio" class="form-input" placeholder="https://yourportfolio.com">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="resume" class="form-label">Resume/CV <span class="required">*</span></label>
+        <input type="file" id="resume" name="resume" class="form-input" accept=".pdf,.doc,.docx" required>
+        <p class="file-info">Accepted formats: PDF, DOC, DOCX (Max 5MB)</p>
+      </div>
+
+      <div class="form-group">
+        <label for="coverLetter" class="form-label">Cover Letter</label>
+        <textarea id="coverLetter" name="coverLetter" class="form-textarea" rows="5" placeholder="Tell us why you're passionate about joining QuerySmart AI..."></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="availability" class="form-label">Available Start Date <span class="required">*</span></label>
+          <input type="date" id="availability" name="availability" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label for="hearAboutUs" class="form-label">How did you hear about us? <span class="required">*</span></label>
+          <select id="hearAboutUs" name="hearAboutUs" class="form-input" required>
+            <option value="">-- Select Option --</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="Indeed">Indeed</option>
+            <option value="Company Website">Company Website</option>
+            <option value="Referral">Employee Referral</option>
+            <option value="GitHub">GitHub</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn" id="careerSubmitBtn">
+        Submit Application
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Contact Information -->
   <div class="contact-info fade-in-up">
     <div class="contact-item">
       <i class="fas fa-envelope" style="color: var(--accent-blue);"></i>
@@ -282,15 +339,272 @@
     </div>
     <div class="contact-item">
       <i class="fab fa-github" style="color: var(--accent-blue);"></i>
-      <a href="https://github.com/Girim9912/">GitHub</a>
+      <a href="https://github.com/Girim9912/" target="_blank">GitHub</a>
     </div>
     <div class="contact-item">
       <i class="fas fa-map-marker-alt" style="color: var(--accent-blue);"></i>
       <span>Connecticut, USA</span>
     </div>
   </div>
+
+  <!-- Admin Link (Optional - can be hidden) -->
+  <div class="admin-link fade-in-up" style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+    <a href="admin.html" style="color: var(--accent-blue); text-decoration: none; font-weight: 600;">
+      <i class="fas fa-user-shield"></i> View All Applications (Admin)
+    </a>
+  </div>
 </section>
 
+<style>
+/* Additional styles for the contact section */
+.contact-section-wrapper {
+  max-width: 800px;
+  margin: 0 auto 4rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.contact-section-title {
+  font-size: 1.8rem;
+  color: var(--text-white);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-white);
+  font-weight: 500;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 0.875rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-white);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.file-info {
+  font-size: 0.875rem;
+  color: var(--text-gray);
+  margin-top: 0.5rem;
+}
+
+.form-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  display: none;
+}
+
+.success-message {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10b981;
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-section-wrapper {
+    padding: 1.5rem;
+  }
+}
+</style>
+
+<script>
+// Set minimum date to today for availability field
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('availability').setAttribute('min', today);
+
+// General Contact Form Handler
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const statusDiv = document.getElementById('contact-message-status');
+  const formData = {
+    name: document.getElementById('contact-name').value,
+    email: document.getElementById('contact-email').value,
+    company: document.getElementById('company').value,
+    message: document.getElementById('contact-message').value,
+    type: 'general_inquiry',
+    timestamp: new Date().toISOString()
+  };
+  
+  // Save to localStorage
+  let inquiries = JSON.parse(localStorage.getItem('contactInquiries') || '[]');
+  inquiries.push(formData);
+  localStorage.setItem('contactInquiries', JSON.stringify(inquiries));
+  
+  // Download as JSON
+  const filename = `inquiry_${Date.now()}_${formData.name.replace(/\s+/g, '_')}.json`;
+  const jsonStr = JSON.stringify(formData, null, 2);
+  const blob = new Blob([jsonStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+  
+  statusDiv.textContent = '✓ Message sent successfully! We\'ll get back to you soon.';
+  statusDiv.style.display = 'block';
+  statusDiv.style.color = '#10b981';
+  this.reset();
+  
+  setTimeout(() => {
+    statusDiv.style.display = 'none';
+  }, 5000);
+});
+
+// Career Form Handler
+const careerForm = document.getElementById('careerForm');
+const careerSuccessMsg = document.getElementById('career-success-message');
+const careerErrorMsg = document.getElementById('career-error-message');
+const careerSubmitBtn = document.getElementById('careerSubmitBtn');
+
+careerForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  careerSuccessMsg.style.display = 'none';
+  careerErrorMsg.style.display = 'none';
+  
+  const fileInput = document.getElementById('resume');
+  const file = fileInput.files[0];
+  
+  if (!file) {
+    showCareerError('Please select a resume file');
+    return;
+  }
+  
+  if (file.size > 5 * 1024 * 1024) {
+    showCareerError('Resume file size must be less than 5MB');
+    return;
+  }
+  
+  careerSubmitBtn.disabled = true;
+  careerSubmitBtn.innerHTML = 'Submitting... <i class="fas fa-spinner fa-spin"></i>';
+  
+  try {
+    const fileBase64 = await fileToBase64(file);
+    
+    const formData = {
+      id: Date.now(),
+      fullName: document.getElementById('fullName').value,
+      email: document.getElementById('career-email').value,
+      phone: document.getElementById('phone').value,
+      position: document.getElementById('position').value,
+      linkedin: document.getElementById('linkedin').value,
+      portfolio: document.getElementById('portfolio').value,
+      coverLetter: document.getElementById('coverLetter').value,
+      availability: document.getElementById('availability').value,
+      hearAboutUs: document.getElementById('hearAboutUs').value,
+      resume: {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        data: fileBase64
+      },
+      submittedAt: new Date().toISOString(),
+      type: 'job_application'
+    };
+    
+    // Save to localStorage
+    let applications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+    applications.push(formData);
+    localStorage.setItem('jobApplications', JSON.stringify(applications));
+    
+    // Download as JSON
+    const filename = `application_${formData.id}_${formData.fullName.replace(/\s+/g, '_')}.json`;
+    const jsonStr = JSON.stringify(formData, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+    
+    showCareerSuccess(formData.id);
+    careerForm.reset();
+    
+  } catch (error) {
+    showCareerError('Error processing form: ' + error.message);
+  } finally {
+    careerSubmitBtn.disabled = false;
+    careerSubmitBtn.innerHTML = 'Submit Application <i class="fas fa-paper-plane"></i>';
+  }
+});
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function showCareerSuccess(id) {
+  careerSuccessMsg.innerHTML = `
+    <strong>✓ Application Submitted Successfully!</strong><br>
+    Application ID: ${id}<br>
+    Your application has been saved and downloaded. We'll review it and get back to you soon!<br>
+    <a href="admin.html" style="color: #10b981; text-decoration: underline; margin-top: 10px; display: inline-block;">View All Submissions</a>
+  `;
+  careerSuccessMsg.style.display = 'block';
+  careerSuccessMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function showCareerError(message) {
+  careerErrorMsg.innerHTML = `<strong>✗ Error:</strong> ${message}`;
+  careerErrorMsg.style.display = 'block';
+  careerErrorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
   <footer class="footer">
     <div class="footer-content">
       <p class="footer-text">&copy; 2025 QuerySmart AI LLC. All rights reserved.</p>
